@@ -97,3 +97,21 @@ h1,h2,h3,h4,h5,h6{
 .hidden{
 	display: none!important;
 }
+
+
+
+/*nosso*/
+a{
+	color: black;
+	text-decoration: none;
+}
+
+.btn-primary{
+	background-color: #4f868c;
+	border-color: #4f868c;
+}
+
+.btn-primary:hover{
+	background-color: #84bcc2;
+	border-color: #84bcc2;
+}
