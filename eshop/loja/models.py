@@ -13,6 +13,7 @@ class Produto(models.Model):
 
     def __str__(self):
         return self.nome
+
 class Vendedor(models.Model):
     who = models.OneToOneField(User, on_delete=models.CASCADE) #generalizacao
     def __str__(self):
@@ -25,7 +26,6 @@ class Comentario(models.Model):
     def __str__(self):
         return self.user.username + ' disse: ' + self.text
 class Questao(models.Model):
-    produto = models.ForeignKey(Produto, on_delete=models.DO_NOTHING)
     texto = models.CharField(max_length=200)
     """ pub_data = models.DateTimeField('data de publicacao') """
 
@@ -35,6 +35,11 @@ class Questao(models.Model):
     """ def foi_publicada_recentemente(self):
         return self.pub_data >= timezone.now() - datetime.timedelta(days=1)
  """
+
+class QuestaoDoProduto(models.Model): #primary key composta
+    produto = models.ForeignKey(Produto, on_delete=models.DO_NOTHING)
+    questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
+     
 class Opcao(models.Model):
     questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
     opcao_texto = models.CharField(max_length=200)
@@ -42,3 +47,15 @@ class Opcao(models.Model):
 
     def __str__(self):
         return self.opcao_texto
+
+class OpcaoDaQuestaoProd(models.Model): #aqui é primary key composta, é uma ternária?
+    questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
+    opcao = models.ForeignKey(Opcao, on_delete=CASCADE)
+    produto = models.ForeignKey(Produto, on_delete=CASCADE)
+
+class Pedido(models.Model):
+    questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
+    opcao = models.ForeignKey(Opcao, on_delete=CASCADE)
+    produto = models.ForeignKey(Produto, on_delete=CASCADE)
+    cliente = models.ForeignKey(User, on_delete=CASCADE)
+
