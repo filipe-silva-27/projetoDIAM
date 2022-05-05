@@ -61,5 +61,5 @@ class Pedido(models.Model):
     opcao = models.ForeignKey(Opcao, on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
-
+##aloaloaloalaolaolaoaloalaolaoaloaloalaolaoloaloalaolaoalol
 
