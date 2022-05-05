@@ -63,3 +63,4 @@ class Pedido(models.Model):
     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
 
 """ bbbbb """
+""" jkhdsjh """
