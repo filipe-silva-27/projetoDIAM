@@ -3,6 +3,12 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+
+class Vendedor(models.Model):
+    who = models.OneToOneField(User, on_delete=models.CASCADE) #generalizacao
+    def __str__(self):
+        return self.who.username
+
 class Produto(models.Model):
     preco = models.IntegerField()
     nome = models.CharField(max_length=100)
@@ -14,10 +20,7 @@ class Produto(models.Model):
     def __str__(self):
         return self.nome
 
-class Vendedor(models.Model):
-    who = models.OneToOneField(User, on_delete=models.CASCADE) #generalizacao
-    def __str__(self):
-        return self.who.username
+
 
 class Comentario(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -50,12 +53,12 @@ class Opcao(models.Model):
 
 class OpcaoDaQuestaoProd(models.Model): #aqui é primary key composta, é uma ternária?
     questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
-    opcao = models.ForeignKey(Opcao, on_delete=CASCADE)
-    produto = models.ForeignKey(Produto, on_delete=CASCADE)
+    opcao = models.ForeignKey(Opcao, on_delete=models.CASCADE)
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
 
 class Pedido(models.Model):
     questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
-    opcao = models.ForeignKey(Opcao, on_delete=CASCADE)
-    produto = models.ForeignKey(Produto, on_delete=CASCADE)
-    cliente = models.ForeignKey(User, on_delete=CASCADE)
+    opcao = models.ForeignKey(Opcao, on_delete=models.CASCADE)
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    cliente = models.ForeignKey(User, on_delete=models.CASCADE)
 
