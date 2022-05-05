@@ -62,7 +62,4 @@ class Pedido(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
 
-""" bbbbb """
 
-
-##GANDA MOCA PRIMEIRO FUMEI CARTAO DPS BATI UM BROKA
