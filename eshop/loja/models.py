@@ -63,3 +63,6 @@ class Pedido(models.Model):
     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
 
 """ bbbbb """
+
+
+##GANDA MOCA PRIMEIRO FUMEI CARTAO DPS BATI UM BROKA
