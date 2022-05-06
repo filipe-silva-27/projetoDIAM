@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 ##oqueeeeee
 class Vendedor(models.Model):
     who = models.OneToOneField(User, on_delete=models.CASCADE) #generalizacao
+    
     def __str__(self):
         return self.who.username
 
