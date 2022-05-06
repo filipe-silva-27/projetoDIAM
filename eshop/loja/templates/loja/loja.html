@@ -4,7 +4,80 @@
 
 {% load static %}
 
-<div class="card-group">
+<div class="card-deck">
+    {% for product in products_list %}
+    <div class="card mb-3">
+        <img class="card-img-top" src="{%static 'images/placeholder.png' %}">
+        
+                <h6><strong> <a class="card-title" href="{% url 'loja:detalheProd' product %}">{{product.nome}}</a></strong></h6>
+                <hr>
+                <button class="btn btn-primary">Adicionar ao Carrinho</button>
+                <!-- <a class="btn btn outline-success" href="#">View</a> -->
+                <h4 style="display:inline-block; float:right">{{product.preco}}</h4>
+        
+    </div>
+    {% endfor %}
+    <div class="card mb-3">
+        <img class="card-img-top" src="{%static 'images/placeholder.png' %}">
+        
+                <h6><strong> <a class="card-title" href="#1">Produto</a></strong></h6>
+                <hr>
+                <button class="btn btn-primary">Adicionar ao Carrinho</button>
+                <!-- <a class="btn btn outline-success" href="#">View</a> -->
+                <h4 style="display:inline-block; float:right">20€</h4>
+        
+    </div>
+    
+    <div class="card mb-3">
+        <img class="card-img-top" src="{%static 'images/placeholder.png' %}">
+        
+                <h6><strong> <a class="card-title" href="#1">Produto</a></strong></h6>
+                <hr>
+                <button class="btn btn-primary">Adicionar ao Carrinho</button>
+                <!-- <a class="btn btn outline-success" href="#">View</a> -->
+                <h4 style="display:inline-block; float:right">20€</h4>
+        
+    </div>
+    <div class="card">
+        <img class="card-img-top" src="{%static 'images/placeholder.png' %}">
+        
+                <h6><strong> <a class="card-title" href="#1">Produto</a></strong></h6>
+                <hr>
+                <button class="btn btn-primary">Adicionar ao Carrinho</button>
+                <!-- <a class="btn btn outline-success" href="#">View</a> -->
+                <h4 style="display:inline-block; float:right">20€</h4>
+        
+    </div>
+    <div class="card">
+        <img class="card-img-top" src="{%static 'images/placeholder.png' %}">
+        
+                <h6><strong> <a class="card-title" href="#1">Produto</a></strong></h6>
+                <hr>
+                <button class="btn btn-primary">Adicionar ao Carrinho</button>
+                <!-- <a class="btn btn outline-success" href="#">View</a> -->
+                <h4 style="display:inline-block; float:right">20€</h4>
+        
+    </div>
+    <div class="card">
+        <img class="card-img-top" src="{%static 'images/placeholder.png' %}">
+        
+                <h6><strong> <a class="card-title" href="#1">Produto</a></strong></h6>
+                <hr>
+                <button class="btn btn-primary">Adicionar ao Carrinho</button>
+                <!-- <a class="btn btn outline-success" href="#">View</a> -->
+                <h4 style="display:inline-block; float:right">20€</h4>
+        
+    </div>
+    <div class="card">
+        <img class="card-img-top" src="{%static 'images/placeholder.png' %}">
+        
+                <h6><strong> <a class="card-title" href="#1">Produto</a></strong></h6>
+                <hr>
+                <button class="btn btn-primary">Adicionar ao Carrinho</button>
+                <!-- <a class="btn btn outline-success" href="#">View</a> -->
+                <h4 style="display:inline-block; float:right">20€</h4>
+        
+    </div>
     <div class="card">
         <img class="card-img-top" src="{%static 'images/placeholder.png' %}">
         
@@ -18,11 +91,7 @@
     
     
     
-    
-    
-    
-    
-    <div class="col-4"lg->
+    <!-- <div class="col-4"lg->
         <img class="thumbnail" src="{%static 'images/placeholder.png' %}">
         <div class="box-element product">
             <h6><strong>Product</strong></h6>
@@ -41,7 +110,7 @@
             <a class="btn btn outline-success" href="#">View</a>
             <h4 style="display:inline-block; float:right">20€</h4>
         </div>
-    </div>
+    </div> -->
 </div>
 
 {% endblock content %}

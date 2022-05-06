@@ -115,3 +115,7 @@ a{
 	background-color: #84bcc2;
 	border-color: #84bcc2;
 }
+
+.card{
+	max-width: 18rem;
+}
