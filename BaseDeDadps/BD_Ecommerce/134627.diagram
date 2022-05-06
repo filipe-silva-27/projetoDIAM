@@ -1,0 +1,59 @@
+format 224
+
+classcanvas 128099 class_ref 135779 // User
+  classdiagramsettings member_max_width 0 end
+  xyz 195 74 2000
+end
+classcanvas 128227 class_ref 135907 // Socios
+  classdiagramsettings member_max_width 0 end
+  xyzwh 368 220 2000 87 67
+end
+classcanvas 128483 class_ref 136035 // Eventos
+  classdiagramsettings member_max_width 0 end
+  xyzwh 373 415 2000 75 73
+end
+classcanvas 129251 class_ref 136163 // Produtos
+  classdiagramsettings member_max_width 0 end
+  xyzwh 101 420 2000 73 51
+end
+classcanvas 129763 class_ref 136291 // BilheteJgo
+  classdiagramsettings member_max_width 0 end
+  xyz 103 541 2000
+end
+relationcanvas 128355 relation_ref 136547 // <generalisation>
+  geometry HVr
+  from ref 128227 z 2001 to point 409 112
+  line 130403 z 2001 to ref 128099
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128867 relation_ref 136803 // <association>
+  from ref 128227 z 2001 to ref 128483
+  no_role_a no_role_b
+  multiplicity_a_pos 396 396 3000 multiplicity_b_pos 394 293 3000
+end
+relationcanvas 129123 relation_ref 136675 // <association>
+  from ref 128227 z 2001 to ref 128483
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129379 relation_ref 136931 // <association>
+  geometry VH
+  from ref 129251 z 2001 to point 135 251
+  line 129635 z 2001 to ref 128227
+  no_role_a no_role_b
+  multiplicity_a_pos 351 260 3000 multiplicity_b_pos 123 401 3000
+end
+relationcanvas 129891 relation_ref 137059 // <generalisation>
+  from ref 129763 z 2001 to ref 129251
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130019 relation_ref 137187 // <association>
+  geometry HV
+  from ref 129763 z 2001 to point 408 558
+  line 130147 z 2001 to ref 128483
+  no_role_a no_role_b
+  multiplicity_a_pos 394 494 3000 multiplicity_b_pos 183 567 3000
+end
+end

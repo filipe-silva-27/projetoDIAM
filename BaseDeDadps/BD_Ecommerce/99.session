@@ -1,0 +1,12 @@
+window_sizes 1800 903 450 1345 753 104
+
+diagrams
+  active  classdiagram_ref 134627 // domi
+    1345 753 100 A4 7 0
+end
+show_stereotypes
+selected attribute_ref 135395 // isSuperuser
+open
+  class_ref 135779 // User
+end
+end

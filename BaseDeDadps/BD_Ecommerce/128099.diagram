@@ -1,0 +1,44 @@
+format 224
+
+classcanvas 128355 class_ref 128355 // Produto
+  classdiagramsettings member_max_width 0 end
+  xyz 378 261 2000
+end
+classcanvas 129635 class_ref 128867 // review
+  classdiagramsettings member_max_width 0 end
+  xyzwh 383 429 2000 77 67
+end
+classcanvas 130915 class_ref 128995 // User
+  classdiagramsettings member_max_width 0 end
+  xyzwh 717 215 2000 77 55
+end
+classcanvas 131171 class_ref 129123 // Vendedor
+  classdiagramsettings member_max_width 0 end
+  xyz 574 147 2000
+end
+relationcanvas 129763 relation_ref 128611 // <association>
+  from ref 129635 z 2001 to ref 128355
+  no_role_a no_role_b
+  multiplicity_a_pos 404 364 3000 multiplicity_b_pos 406 410 3000
+end
+relationcanvas 131427 relation_ref 129507 // <generalisation>
+  geometry VH
+  from ref 131171 z 2001 to point 604 239
+  line 131939 z 2001 to ref 130915
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132195 relation_ref 129763 // <association>
+  geometry VH
+  from ref 128355 z 2001 to point 417 163
+  line 132323 z 2001 to ref 131171
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132451 relation_ref 129891 // <association>
+  from ref 129635 z 2001 to point 755 457
+  line 132579 z 2001 to ref 130915
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end
