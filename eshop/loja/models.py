@@ -59,3 +59,10 @@ class Opcao(models.Model):
     nas views por produto = getObjectOR404(Produto, on_delete=models.CASCADE) 
     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
  """
+
+class Cart(models.Model):
+    cliente = models.ForeignKey(User, on_delete=models.CASCADE)
+    lista_Produtos = {}
+
+    def adicionaAoCart(produto):
+         lista_Produtos.append(produto)

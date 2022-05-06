@@ -38,3 +38,15 @@ def register(request):
         return HttpResponseRedirect(reverse('loja:index'))
     else:
         return render(request,'loja/registo.html')
+
+""" 
+def addCart(request, prod_id):
+    prodAdicionar = Produto.objects.filter(id=prod_id)
+    #se estiver logado: 
+    carrinho = Cart.objects.filter(cliente=request.user)
+    carrinho.adicionaAoCart(prodAdicionar)
+    return HttpResponse("Yeahh")
+    #else
+    #return HttpResponseRedirect(reverse('loja:login1'))
+     """
+    
