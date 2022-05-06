@@ -1,0 +1,208 @@
+format 224
+"bd" // bd
+  revision 2
+  modified_by 99 "muril"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 134627 "domi"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 134627 "domi"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 135779 "User"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 135139 "Username"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 135267 "mail"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 135395 "isSuperuser"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 135907 "Socios"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 137955 // <generalisation>
+	relation 136547 ---|>
+	  a public
+	    classrelation_ref 137955 // <generalisation>
+	  b parent class_ref 135779 // User
+      end
+
+      classrelation 138083 // <association>
+	relation 136675 ----
+	  a role_name "" private
+	    classrelation_ref 138083 // <association>
+	  b role_name "" private
+	    classrelation_ref 138211 // <association>
+      end
+
+      classrelation 138339 // <association>
+	relation 136803 ----
+	  a role_name "" multiplicity "*" private
+	    classrelation_ref 138339 // <association>
+	  b role_name "" multiplicity "1" private
+	    classrelation_ref 138467 // <association>
+      end
+
+      classrelation 138723 // <association>
+	relation_ref 136931 // <association>
+      end
+    end
+
+    class 136035 "Eventos"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 138211 // <association>
+	relation_ref 136675 // <association>
+      end
+
+      classrelation 138467 // <association>
+	relation_ref 136803 // <association>
+      end
+
+      classrelation 139107 // <association>
+	relation_ref 137187 // <association>
+      end
+    end
+
+    class 136163 "Produtos"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 138595 // <association>
+	relation 136931 ----
+	  a role_name "" multiplicity "1" private
+	    classrelation_ref 138595 // <association>
+	  b role_name "" multiplicity "*" private
+	    classrelation_ref 138723 // <association>
+      end
+    end
+
+    class 136291 "BilheteJgo"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 138851 // <generalisation>
+	relation 137059 ---|>
+	  a public
+	    classrelation_ref 138851 // <generalisation>
+	  b parent class_ref 136163 // Produtos
+      end
+
+      classrelation 138979 // <association>
+	relation 137187 ----
+	  a role_name "" multiplicity "1" private
+	    classrelation_ref 138979 // <association>
+	  b role_name "" multiplicity "*" private
+	    classrelation_ref 139107 // <association>
+      end
+    end
+  end
+end
