@@ -5,7 +5,7 @@
 		<div class="col-lg-12">
 			<div class="box-element">
 
-				<a  class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
+				<a  class="btn btn-outline-dark" href="{% url 'loja:loja' %}">&#x2190; Continue Shopping</a>
 
 				<br>
 				<br>
@@ -14,7 +14,7 @@
 						<th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
 						<th><h5>Total:<strong> ${{order.get_cart_total|floatformat:2}}</strong></h5></th>
 						<th>
-							<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
+							<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'loja:checkout' %}">Checkout</a>
 						</th>
 					</tr>
 				</table>

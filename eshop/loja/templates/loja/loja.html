@@ -4,44 +4,20 @@
 
 {% load static %}
 
-<div class="card-group">
-    <div class="card">
+<div class="card-group ">
+    {% for product in products_list %}
+    <div class="card m-2 mb-3">
         <img class="card-img-top" src="{%static 'images/placeholder.png' %}">
         
-                <h6><strong> <a class="card-title" href="#1">Produto</a></strong></h6>
-                <hr>
-                <button class="btn btn-primary">Adicionar ao Carrinho</button>
-                <!-- <a class="btn btn outline-success" href="#">View</a> -->
-                <h4 style="display:inline-block; float:right">20€</h4>
+                <h6><strong> <a class="card-title ps-2" href="{% url 'loja:detalheProd' product.id %}">{{product.nome}}</a></strong></h6>
+                
+                <!-- <a target="_blank" class="btn btn-info pull-right" href="{ url 'loja:addCart' product.id %}">
+                Add cart
+                </a> TIRAR DAQUI POIS È PRECISO PERSONALIZAR PRIMEIRO!!!! USAR ESTE BOTAO NO DETALHE DO PRODUTO-->
+                <h4 class="ps-2" style="display:inline-block; float:right">{{product.preco}}</h4>
         
     </div>
-    
-    
-    
-    
-    
-    
-    
-    <div class="col-4"lg->
-        <img class="thumbnail" src="{%static 'images/placeholder.png' %}">
-        <div class="box-element product">
-            <h6><strong>Product</strong></h6>
-            <hr>
-            <button class="btm btn-outline-secondary add-btn">Adicionar ao Carrinho</button>
-            <a class="btn btn outline-success" href="#">View</a>
-            <h4 style="display:inline-block; float:right">20€</h4>
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <img class="thumbnail" src="{%static 'images/placeholder.png' %}">
-        <div class="box-element product">
-            <h6><strong>Product</strong></h6>
-            <hr>
-            <button class="btm btn-outline-secondary add-btn">Adicionar ao Carrinho</button>
-            <a class="btn btn outline-success" href="#">View</a>
-            <h4 style="display:inline-block; float:right">20€</h4>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 
 {% endblock content %}

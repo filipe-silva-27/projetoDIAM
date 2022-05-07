@@ -4,11 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="98252456-aa5c-4a20-aa0c-20984dc5bd00" name="Changes" comment="" />
+    <list default="true" id="98252456-aa5c-4a20-aa0c-20984dc5bd00" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/eshop/loja/templates/loja/criaProduto.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eshop/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eshop/loja/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eshop/loja/templates/loja/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/templates/loja/cart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eshop/loja/templates/loja/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/templates/loja/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eshop/loja/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eshop/loja/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/views.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -19,8 +38,10 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -38,10 +59,34 @@
       <updated>1651251167575</updated>
       <workItem from="1651251169247" duration="138000" />
       <workItem from="1651431674212" duration="845000" />
+      <workItem from="1651864749996" duration="3518000" />
+      <workItem from="1651907178239" duration="11322000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/eshop/loja/views.py</url>
+          <line>44</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
