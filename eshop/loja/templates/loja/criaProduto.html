@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="{% url 'loja:criaProduto' %}" method="post" enctype="multipart/form-data">
+
+    {% csrf_token %}
+    <label for="novoP"><b>Nome:</b></label>
+    <input type="text" name="novoP" id="novoP" required>
+
+    <label for="desc"><b>Descrição:</b></label>
+    <input type="text" name="desc" id="desc" required>
+
+    <label for="precoP"><b>Preço:</b></label>
+    <input type="number" name="precoP" id="precoP" required>
+
+    <label for="Foto"><b>Foto:</b></label>
+    <input type="file" name="fotoP" id="Foto" required>
+
+    <label for="isPers"><b>Personalizável:</b></label>
+    <input type="checkbox" id="isPers" name="isPers" value="True">
+
+    <label for="perg">Escolha uma pergunta</label>
+    <select name="questoes" id="perg" required>
+        {% for questao in questoes %}
+            <option value={{questao.id}}>{{questao.texto}}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" >Criar</button>
+</form>
+</body>
+</html>

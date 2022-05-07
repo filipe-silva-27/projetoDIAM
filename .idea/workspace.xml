@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="98252456-aa5c-4a20-aa0c-20984dc5bd00" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/projetoDIAM.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/projetoDIAM.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eshop/loja/templates/loja/criaProduto.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eshop/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eshop/loja/templates/loja/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/templates/loja/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eshop/loja/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eshop/loja/templates/loja/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/templates/loja/cart.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eshop/loja/templates/loja/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/templates/loja/main.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eshop/loja/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eshop/loja/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/views.py" afterDir="false" />
@@ -20,6 +18,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -33,6 +38,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -54,6 +60,7 @@
       <workItem from="1651251169247" duration="138000" />
       <workItem from="1651431674212" duration="845000" />
       <workItem from="1651864749996" duration="3518000" />
+      <workItem from="1651907178239" duration="11322000" />
     </task>
     <servers />
   </component>
@@ -76,7 +83,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/eshop/loja/views.py</url>
-          <line>43</line>
+          <line>44</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

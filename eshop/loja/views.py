@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.template import loader
 from .models import *
 from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
 
 def index(request):
     return  HttpResponse(render(request, 'loja/main.html' ))
@@ -14,7 +15,7 @@ def loja(request):
     prod1 = Produto(id=1, preco=40, nome="gar")
     prod2 = Produto(id=2, preco=50, nome="dois")
     lista_teste = {prod1, prod2}
-    return render(request, 'loja/loja.html' , {'products_list': lista_teste})
+    return render(request, 'loja/loja.html' , {'products_list': produtos})
 
 
 def cart(request):
@@ -50,10 +51,34 @@ def logout1(request):
         return HttpResponse("Erro no Logout do Utilizador feito ")
 
 def register(request):
-    if request.method=='POST':
+    if request.method=='POST': #falta aqui receber do form
         return HttpResponseRedirect(reverse('loja:loja'))
     else:
         return render(request,'loja/registo.html')
+
+def criaProduto(request):
+    if request.method == 'POST':
+        nome = request.POST['novoP']
+        descr = request.POST['desc']
+        preco = request.POST['precoP']
+        isPersonalizavel = request.POST['isPers']
+        if isPersonalizavel == 'True':
+            atributoPers = True
+        else:
+            atributoPers = False
+        foto = request.FILES['fotoP']
+        fs = FileSystemStorage()
+        filename = fs.save(foto.name, foto)
+        uploaded_file_url = fs.url(filename)
+
+        vendedor= list(Vendedor.objects.filter(who=request.user.id))
+
+        novoProduto= Produto(preco=preco, nome=nome, descricao=descr, personalizavel=atributoPers, pic=uploaded_file_url, seller=vendedor[0])
+        novoProduto.save()
+        return HttpResponse("Produto guardado!!!!!")
+    else:
+        questoes=Questao.objects.all()
+        return render(request, "loja/criaProduto.html", {"questoes": questoes})
 
 """ 
 def addCart(request, prod_id):
