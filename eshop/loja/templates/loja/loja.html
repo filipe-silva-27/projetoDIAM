@@ -14,7 +14,8 @@
                 <!-- <a target="_blank" class="btn btn-info pull-right" href="{ url 'loja:addCart' product.id %}">
                 Add cart
                 </a> TIRAR DAQUI POIS È PRECISO PERSONALIZAR PRIMEIRO!!!! USAR ESTE BOTAO NO DETALHE DO PRODUTO-->
-                <h4 class="ps-2" style="display:inline-block; float:right">{{product.preco}}</h4>
+                <h5 class="ps-2" style="display:inline-block; float:right">{{product.preco}} €</h5>
+                <a class="btn btn-primary float-right" href="{% url 'loja:add_cart' product.id %}">Adicionar ao carrinho</a>
         
     </div>
     {% endfor %}

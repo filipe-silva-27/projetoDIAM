@@ -1,5 +1,6 @@
 {% extends 'loja/main.html' %}
 {% load static %}
+
 {% block content %}
 	<div class="row">
 		<div class="col-lg-12">
@@ -11,7 +12,7 @@
 				<br>
 				<table class="table">
 					<tr>
-						<th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
+						<th><h5>Items: <strong>{{ produtos | length }}</strong></h5></th>
 						<th><h5>Total:<strong> ${{order.get_cart_total|floatformat:2}}</strong></h5></th>
 						<th>
 							<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'loja:checkout' %}">Checkout</a>
@@ -28,27 +29,30 @@
 					<div style="flex:2"><strong>Item</strong></div>
 					<div style="flex:1"><strong>Price</strong></div>
 					<div style="flex:1"><strong>Quantity</strong></div>
-					<div style="flex:1"><strong>Total</strong></div>
+					<div style="flex:1"><strong>Delete</strong></div>
 				</div>
-				{% for item in items %}
+				{% for produto in produtos%}
 				<div class="cart-row">
-					<div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
-					<div style="flex:2"><p>product 1<!-- {{item.product.name}} --></p></div>
-					<div style="flex:1"><p> 20€ <!-- ${{item.product.price|floatformat:2}} --></p></div>
+					<div style="flex:2"><img class="row-image" src="{{produto.pic}}"></div>
+					<div style="flex:2"><p>{{produto.nome}}<!-- {{item.product.name}} --></p></div>
+					<div style="flex:1"><p> {{produto.preco}}€ <!-- ${{item.product.price|floatformat:2}} --></p></div>
 					<div style="flex:1">
 						<p class="quantity">1<!-- {{item.quantity}} --></p>
 						<div class="quantity">
-							<img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
+							<img data-product="{{item.produto.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
 							<!-- adiciona as setas que adiciona ou retiram o numero de itens desse produto-->
 							<img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
 						</div>
 					</div>
-					<div style="flex:1"><p>1<!-- ${{item.get_total|floatformat:2}} --></p></div>
+					<div style="flex:1"><a href="{% url 'loja:remove_cart' produto.id %}">Delete </a></div>
 				</div>
 				{% endfor %}
 			</div>
 		</div>
 	</div>
+	<p></p>
+	
+
 {% endblock content %}
 {% block js %}
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>

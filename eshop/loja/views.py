@@ -1,5 +1,6 @@
+import re
 from django.contrib.auth import login, authenticate, logout
-from django.shortcuts import render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.template import loader
@@ -15,15 +16,35 @@ def loja(request):
     produtos = Produto.objects.all()
     return render(request, 'loja/loja.html' , {'products_list': produtos})
 
+##CARINHO FUNCIONA
 @login_required(login_url='loja:login1')
 def cart(request):
-    return render(request, 'loja/cart.html' )
+    try:
+        carrinho = Cart.objects.get(cliente=request.user) 
+        produtos= carrinho.produtos.all()
+        return render(request, 'loja/cart.html', {'produtos':produtos})
+    except Cart.DoesNotExist:
+        return render(request, 'loja/cart.html')
+
+@login_required(login_url='loja:login1')
+def add_cart(request,produto_id):
+    produto = get_object_or_404(Produto, pk=produto_id)
+    carrinho,created = Cart.objects.get_or_create(cliente=request.user)
+    carrinho.produtos.add(produto)
+    return redirect('loja:cart')
+
+@login_required(login_url='loja:login1')
+def remove_cart(request,produto_id):
+    produto = get_object_or_404(Produto, pk=produto_id)
+    carrinho = Cart.objects.get(cliente=request.user) 
+    carrinho.produtos.remove(produto)
+    return redirect('loja:cart')
+##FIM CARRINHO
 
 def checkout(request):
     return render(request, 'loja/checkout.html')
 
 def detalheProd (request, produto_id):
-
     return render(request, 'loja/detalhesProd.html' , {'produto': produto_id})
     """ return  render(request, 'loja/checkout.html') """
 
@@ -87,11 +108,7 @@ def criaProduto(request):
 """ 
 def addCart(request, prod_id):
     prodAdicionar = Produto.objects.filter(id=prod_id)
-    #se estiver logado: 
     carrinho = Cart.objects.filter(cliente=request.user)
     carrinho.adicionaAoCart(prodAdicionar)
     return HttpResponse("Yeahh")
-    #else
-    #return HttpResponseRedirect(reverse('loja:login1'))
-     """
-    
+"""

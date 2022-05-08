@@ -1,18 +1,8 @@
+
 from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-
-##oqueeeeee
-class Vendedor(models.Model):
-    who = models.OneToOneField(User, on_delete=models.CASCADE) #generalizacao
-    
-    def __str__(self):
-        return self.who.username
-
-
-
-
 class Questao(models.Model):
     texto = models.CharField(max_length=200)
     """ pub_data = models.DateTimeField('data de publicacao') """
@@ -23,6 +13,14 @@ class Questao(models.Model):
     """ def foi_publicada_recentemente(self):
         return self.pub_data >= timezone.now() - datetime.timedelta(days=1)
  """
+
+##oqueeeeee
+class Vendedor(models.Model):
+    who = models.OneToOneField(User, on_delete=models.CASCADE) #generalizacao
+    
+    def __str__(self):
+        return self.who.username
+
 
 class Produto(models.Model):
     preco = models.IntegerField()
@@ -35,6 +33,23 @@ class Produto(models.Model):
 
     def __str__(self):
         return self.nome
+        
+##nao toca no carrinho que ta a dar       
+class Cart(models.Model):
+    cliente = models.ForeignKey(User, on_delete=models.CASCADE)
+    produtos = models.ManyToManyField(Produto)
+
+
+
+
+
+
+
+
+
+
+
+
 
 # class Comentario(models.Model):
 #     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -57,9 +72,4 @@ class Opcao(models.Model): #é uma opcão de escolha de um produto é como um pr
         return self.opcao_texto
 
 
-class Cart(models.Model):
-    cliente = models.ForeignKey(User, on_delete=models.CASCADE)
-    produtos = models.ManyToManyField(Opcao)
 
-# def addToCart(produto):
-#      carrinhodocliente.produtos.add(produto)
