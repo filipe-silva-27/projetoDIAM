@@ -105,10 +105,3 @@ def criaProduto(request):
         questoes=Questao.objects.all()
         return render(request, "loja/criaProduto.html", {"questoes": questoes})
 
-""" 
-def addCart(request, prod_id):
-    prodAdicionar = Produto.objects.filter(id=prod_id)
-    carrinho = Cart.objects.filter(cliente=request.user)
-    carrinho.adicionaAoCart(prodAdicionar)
-    return HttpResponse("Yeahh")
-"""
