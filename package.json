@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "django": "^1.0.0",
+    "jquery-validation": "^1.19.3",
     "pip": "^0.0.1"
   }
 }

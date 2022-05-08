@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.template import loader
 from .models import *
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 
 def index(request):
@@ -12,12 +13,9 @@ def index(request):
 
 def loja(request):
     produtos = Produto.objects.all()
-    prod1 = Produto(id=1, preco=40, nome="gar")
-    prod2 = Produto(id=2, preco=50, nome="dois")
-    lista_teste = {prod1, prod2}
     return render(request, 'loja/loja.html' , {'products_list': produtos})
 
-
+@login_required(login_url='loja:login1')
 def cart(request):
     return render(request, 'loja/cart.html' )
 
@@ -30,6 +28,8 @@ def detalheProd (request, produto_id):
     """ return  render(request, 'loja/checkout.html') """
 
 def login1(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('loja:loja'))
     if request.method == 'POST':
         username = request.POST['uname']
         password = request.POST['psw']
@@ -52,6 +52,10 @@ def logout1(request):
 
 def register(request):
     if request.method=='POST': #falta aqui receber do form
+        username= request.POST['username']
+        email=request.POST['email']
+        password= request.POST['psw']
+        User.objects.create_user(username=username,email=email,password=password)
         return HttpResponseRedirect(reverse('loja:loja'))
     else:
         return render(request,'loja/registo.html')
