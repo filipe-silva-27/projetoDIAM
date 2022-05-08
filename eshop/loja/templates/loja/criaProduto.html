@@ -3,34 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script>
+
+
+
+        var counter = 1;
+        var dynamicInput = [];
+        var questaoCounter = 1;
+        var personalizar =[];
+
+        function addInput(){
+            var newdiv = document.createElement('div');
+            newdiv.id = dynamicInput[counter];
+            newdiv.name = "opcao"+counter+"Q"+questaoCounter;
+            newdiv.innerHTML = "Entry " + (counter + 1) + " <br><input type='text' name='myInputs[]'> <input type='button' value='-' onClick='removeInput("+dynamicInput[counter]+");'>";
+            document.getElementById('formulario').appendChild(newdiv);
+            counter++;
+        }
+  
+        function removeInput(id){
+            var elem = document.getElementById(id);
+            return elem.parentNode.removeChild(elem);
+        }
+
+        function novodivpersonalizar(){
+            if (questaoCounter != 4){
+                var newdive = document.createElement('div');
+                newdive.id = personalizar[questaoCounter];
+                newdive.name= "questao"+questaoCounter;
+                newdive.innerHTML = document.getElementById('personalizar').innerHTML ;
+                document.getElementById('formulario').appendChild(newdive);
+                questaoCounter++;
+                counter=1;
+            }
+        } 
+    </script>
 </head>
 <body>
 
-<form action="{% url 'loja:criaProduto' %}" method="post" enctype="multipart/form-data">
+<form action="{% url 'loja:criaProduto' %}" id="formulario" method="post" enctype="multipart/form-data">
 
     {% csrf_token %}
+
+    <button type="submit" >Criar</button>
+
+    <br>
+    <br>
     <label for="novoP"><b>Nome:</b></label>
     <input type="text" name="novoP" id="novoP" required>
+    <br>
 
     <label for="desc"><b>Descrição:</b></label>
     <input type="text" name="desc" id="desc" required>
+    <br>
 
     <label for="precoP"><b>Preço:</b></label>
     <input type="number" name="precoP" id="precoP" required>
+    <br>
 
     <label for="Foto"><b>Foto:</b></label>
     <input type="file" name="fotoP" id="Foto" required>
+    <br>
 
     <label for="isPers"><b>Personalizável:</b></label>
     <input type="checkbox" id="isPers" name="isPers" value="True">
+    <!-- quando clica na checkbox aparece o div personalizar -->
+    
+    
+    <button type="button" onclick="novodivpersonalizar()">Nova Pergunta</button> 
+    <br>
 
-    <label for="perg">Escolha uma pergunta</label>
-    <select name="questoes" id="perg" required>
-        {% for questao in questoes %}
-            <option value={{questao.id}}>{{questao.texto}}</option>
-        {% endfor %}
-    </select>
-    <button type="submit" >Criar</button>
+    <div class="personalizar[0]" id="personalizar">  
+        <select class="dropdown-menu" name="questoes"  required>
+            {% for questao in questoes %}
+                <option class="dropdown-item" value={{questao.id}}>{{questao.texto}}</option>
+
+            
+            {% endfor %}
+        </select>
+
+        <div id="dynamicInput[0]">
+            Entry 1<br><input type="text" > 
+            <input type="button" value="+" onclick="addInput()">
+        </div>
+         
+    </div>  
+
+
+     
+    
+
+    
 </form>
+
+
+
 </body>
 </html>

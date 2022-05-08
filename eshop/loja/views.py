@@ -100,6 +100,12 @@ def criaProduto(request):
 
         novoProduto= Produto(preco=preco, nome=nome, descricao=descr, personalizavel=atributoPers, pic=uploaded_file_url, seller=vendedor)
         novoProduto.save()
+        
+        for questEscolhID in request.POST['questoes']:
+            questEscolhida = Questao.objects.filter(id=questEscolhID).first()
+            opcaoEsco = Opcao(texto="amarelo", produto=novoProduto, questao=questEscolhida)
+            opcaoEsco.save()
+
         return HttpResponse("Produto guardado!!!!!")
     else:
         questoes=Questao.objects.all()
