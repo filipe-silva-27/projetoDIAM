@@ -1,6 +1,7 @@
 {% extends 'loja/main.html' %}
 {% load static %}
 {% block content %}
+<br>
 <form action="{% url 'loja:login1' %}" method="post">{% csrf_token %}
 <!--  <div class="imgcontainer">-->
 <!--    <img src="img_avatar2.png" alt="Avatar" class="avatar">-->

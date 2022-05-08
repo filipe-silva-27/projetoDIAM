@@ -7,7 +7,7 @@
 <div class="card-group ">
     {% for product in products_list %}
     <div class="card m-2 mb-3">
-        <img class="card-img-top" src="{%static 'images/placeholder.png' %}">
+        <img class="card-img-top" width="240" height="180" style="object-fit:contain;" src="{{product.pic}}">
         
                 <h6><strong> <a class="card-title ps-2" href="{% url 'loja:detalheProd' product.id %}">{{product.nome}}</a></strong></h6>
                 
