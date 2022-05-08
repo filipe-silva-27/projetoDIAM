@@ -1,5 +1,8 @@
 {% extends 'loja/main.html' %}
 {% load static %}
+
+
+
 {% block content %}
 <br>
 <form action="{% url 'loja:login1' %}" method="post">{% csrf_token %}
@@ -18,7 +21,7 @@
     <label>
       <input type="checkbox" checked="checked" name="remember"> Remember me
     </label> <br><br>
-    Não tem conta?<a class="link-info"href="{% url 'loja:register' %}">registe-se</a>
+    Não tem conta? <a class="border-dark btn btn-info bg-dark" style="color:white" href="{% url 'loja:register' %}">registe-se</a>
   </div>
 {% endblock content %}
 {% block js %}

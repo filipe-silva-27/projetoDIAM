@@ -1,0 +1,28 @@
+body{
+	background-color: #e0d8ce;
+}
+
+h1,h2,h3,h4,h5,h6{
+	color:hsl(0, 0%, 30%);
+}
+
+.box-element{
+	box-shadow:hsl(0, 0%, 80%) 0 0 16px;
+	background-color: #fff;
+	border-radius: 4px;
+	padding: 10px;
+}
+
+.bg-dark{
+	background-color: #5F7161!important;
+}
+
+.btn{
+	border-radius: 0;
+}
+
+#cart-icon{     /* imagem do carrinho ao pe de cart */
+	width:25px;
+	display: inline-block;
+	
+}

@@ -1,1 +1,52 @@
-<h1>funciona!</h1>
+{% extends "loja/main.html" %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/detalhesProd.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+
+
+<div class="container mt-5 mb-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-10">
+            <div class="card me-auto ms-auto">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="images p-3"> 
+                            <img id="main-image" src="{{produto.pic}}" width="250" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="product p-4">
+                            
+                            <div class="mb-3"> 
+                                <h5 class="text-uppercase">{{produto.nome}}</h5>
+                                <span class="text-uppercase text-muted brand">by {{produto.seller.who.username}}</span>
+                                <div class="price d-flex flex-row align-items-center fs-2 fw-bold"> {{produto.preco}}€
+                                </div>
+                            </div>
+                            <p class="about">{{produto.descricao}}</p>
+                            
+                            <!-- questoes -->
+                            <div class="sizes mt-2">
+                                <h6 class="text-uppercase">Size</h6> <label class="radio"> <input type="radio" name="size" value="S" checked> <span>S</span> </label> <label class="radio"> <input type="radio" name="size" value="M"> <span>M</span> </label> <label class="radio"> <input type="radio" name="size" value="L"> <span>L</span> </label> <label class="radio"> <input type="radio" name="size" value="XL"> <span>XL</span> </label> <label class="radio"> <input type="radio" name="size" value="XXL"> <span>XXL</span> </label>
+                            </div>
+                            <br>
+                            <a class="btn btn-danger float-right " href="{% url 'loja:add_cart' produtoID %}">Adicionar ao carrinho</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+{% endblock js %}
