@@ -1,5 +1,6 @@
 
 from django.db import models
+
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -38,6 +39,15 @@ class Produto(models.Model):
 class Cart(models.Model):
     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
     produtos = models.ManyToManyField(Produto)
+
+    def valor_carrinho(self):
+        lista_produtos = self.produtos.all()
+        valor=0
+        for produto in lista_produtos:
+            valor=valor+produto.preco
+        return valor
+    def items_carrinho(self):
+        return len(self.produtos.all())
 
 
 
