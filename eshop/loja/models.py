@@ -1,5 +1,6 @@
 
 from django.db import models
+
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -17,7 +18,7 @@ class Questao(models.Model):
 ##oqueeeeee
 class Vendedor(models.Model):
     who = models.OneToOneField(User, on_delete=models.CASCADE) #generalizacao
-    
+
     def __str__(self):
         return self.who.username
 
@@ -33,8 +34,8 @@ class Produto(models.Model):
 
     def __str__(self):
         return self.nome
-        
-##nao toca no carrinho que ta a dar       
+
+##nao toca no carrinho que ta a dar
 class Cart(models.Model):
     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
     produtos = models.ManyToManyField(Produto)
@@ -69,7 +70,7 @@ class Cart(models.Model):
 class QuestaoDoProduto(models.Model): #primary key composta
     produto = models.ForeignKey(Produto, on_delete=models.DO_NOTHING)
     questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
-     
+
 class Opcao(models.Model): #é uma opcão de escolha de um produto é como um produto filtrado
     texto = models.CharField(max_length=200)
     produto = models.ForeignKey(Produto, on_delete=models.DO_NOTHING, default=1)
@@ -78,6 +79,3 @@ class Opcao(models.Model): #é uma opcão de escolha de um produto é como um pr
 
     def __str__(self):
         return self.opcao_texto
-
-
-
