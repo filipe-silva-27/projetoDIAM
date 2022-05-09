@@ -21,8 +21,7 @@ def loja(request):
 def cart(request):
     try:
         carrinho = Cart.objects.get(cliente=request.user) 
-        produtos= carrinho.produtos.all()
-        return render(request, 'loja/cart.html', {'produtos':produtos})
+        return render(request, 'loja/cart.html', {'carrinho':carrinho})
     except Cart.DoesNotExist:
         return render(request, 'loja/cart.html')
 

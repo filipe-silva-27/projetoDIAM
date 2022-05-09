@@ -16,8 +16,8 @@
 				<br>
 				<table class="table">
 					<tr>
-						<th><h5>Items: <strong>{{ produtos | length }}</strong></h5></th>
-						<th><h5>Total:<strong> ${{order.get_cart_total|floatformat:2}}</strong></h5></th>
+						<th><h5>Items: <strong>{{ carrinho.items_carrinho }}</strong></h5></th>
+						<th><h5>Total:<strong> ${{carrinho.valor_carrinho |floatformat:2}}</strong></h5></th>
 						<th>
 							<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'loja:checkout' %}">Checkout</a>
 						</th>
@@ -35,7 +35,7 @@
 					<div style="flex:1"><strong>Quantity</strong></div>
 					<div style="flex:1"><strong>Delete</strong></div>
 				</div>
-				{% for produto in produtos%}
+				{% for produto in carrinho.produtos.all  %}
 				<div class="cart-row">
 					<div style="flex:2"><img class="row-image" src="{{produto.pic}}"></div>
 					<div style="flex:2"><p>{{produto.nome}}<!-- {{item.product.name}} --></p></div>
