@@ -67,7 +67,7 @@ def logout1(request):
     if request.user.is_authenticated:
         logout(request)
         return HttpResponseRedirect(reverse('loja:loja'))
-
+#push
     else:
         return HttpResponse("Erro no Logout do Utilizador feito ")
 
