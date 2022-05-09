@@ -20,8 +20,10 @@ def loja(request):
 @login_required(login_url='loja:login1')
 def cart(request):
     try:
-        carrinho = Cart.objects.get(cliente=request.user) 
-        return render(request, 'loja/cart.html', {'carrinho':carrinho})
+        carrinho = Cart. objects.get(cliente=request.user)
+        pr = ProdutoCarrinho.objects.filter(carrinho=carrinho)
+        produtos = zip(carrinho.produtos.all(), pr)
+        return render(request, 'loja/cart.html', {'carrinho':carrinho ,'produtos':produtos })
     except Cart.DoesNotExist:
         return render(request, 'loja/cart.html')
 
@@ -29,7 +31,15 @@ def cart(request):
 def add_cart(request,produto_id):
     produto = get_object_or_404(Produto, pk=produto_id)
     carrinho,created = Cart.objects.get_or_create(cliente=request.user)
-    carrinho.produtos.add(produto)
+    if carrinho.produtos.filter(id=produto.id).exists():
+        changes = ProdutoCarrinho.objects.get(produto=produto,carrinho=carrinho)
+        changes.quantidade = changes.quantidade+1
+        changes.save()
+        return redirect('loja:cart')
+    add = ProdutoCarrinho( produto=produto,
+    carrinho=carrinho,
+    quantidade=1)
+    add.save()
     return redirect('loja:cart')
 
 @login_required(login_url='loja:login1')
@@ -38,6 +48,19 @@ def remove_cart(request,produto_id):
     carrinho = Cart.objects.get(cliente=request.user) 
     carrinho.produtos.remove(produto)
     return redirect('loja:cart')
+
+@login_required(login_url='loja:login1')
+def remove_one(request,produto_id):
+    produto = get_object_or_404(Produto, pk=produto_id)
+    carrinho = Cart.objects.get(cliente=request.user)
+    if carrinho.produtos.filter(id=produto.id).exists():
+        changes = ProdutoCarrinho.objects.get(produto=produto,carrinho=carrinho)
+        if changes.quantidade == 1  :
+            return redirect('loja:cart')
+        changes.quantidade = changes.quantidade-1
+        changes.save()
+        return redirect('loja:cart')
+ 
 ##FIM CARRINHO
 
 def checkout(request):

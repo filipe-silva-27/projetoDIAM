@@ -17,11 +17,7 @@
 				<table class="table">
 					<tr>
 						<th><h5>Items: <strong>{{ carrinho.items_carrinho }}</strong></h5></th>
-<<<<<<< HEAD
-						<th><h5>Total:<strong> ${{carrinho.valor_carrinho |floatformat:2}}</strong></h5></th>
-=======
-						<th><h5>Total:<strong> {{ carrinho.valor_carrinho }}$</strong></h5></th>
->>>>>>> 4677cff6026834c4a225bd56bc21ca92ada9ed49
+						<th><h5>Total:<strong> {{carrinho.valor_carrinho |floatformat:2}}€</strong></h5></th>
 						<th>
 							<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'loja:checkout' %}">Checkout</a>
 						</th>
@@ -39,17 +35,17 @@
 					<div style="flex:1"><strong>Quantity</strong></div>
 					<div style="flex:1"><strong>Delete</strong></div>
 				</div>
-				{% for produto in carrinho.produtos.all  %}
+				{% for produto,info in produtos  %}
 				<div class="cart-row">
 					<div style="flex:2"><img class="row-image" src="{{produto.pic}}"></div>
 					<div style="flex:2"><p>{{produto.nome}}<!-- {{item.product.name}} --></p></div>
 					<div style="flex:1"><p> {{produto.preco}}€ <!-- ${{item.product.price|floatformat:2}} --></p></div>
 					<div style="flex:1">
-						<p class="quantity">1<!-- {{item.quantity}} --></p>
+						<p class="quantity">{{info.quantidade}}<!-- {{item.quantity}} --></p>
 						<div class="quantity">
-							<img data-product="{{item.produto.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
+							<a href="{% url 'loja:add_cart' produto.id %}"> <img class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}"> </a>
 							<!-- adiciona as setas que adiciona ou retiram o numero de itens desse produto-->
-							<img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
+							<a href="{% url 'loja:remove_one' produto.id %}"><img class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}"></a>
 						</div>
 					</div>
 					<div style="flex:1"><a href="{% url 'loja:remove_cart' produto.id %}">Delete </a></div>

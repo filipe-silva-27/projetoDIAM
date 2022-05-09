@@ -38,19 +38,28 @@ class Produto(models.Model):
 ##nao toca no carrinho que ta a dar
 class Cart(models.Model):
     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
-    produtos = models.ManyToManyField(Produto)
+    produtos = models.ManyToManyField(Produto, through='ProdutoCarrinho')
 
     def valor_carrinho(self):
         lista_produtos = self.produtos.all()
+        lista_info = ProdutoCarrinho.objects.filter(carrinho=self)
+        iterar=zip(lista_produtos,lista_info)
         valor=0
-        for produto in lista_produtos:
-            valor=valor+produto.preco
+        for produto,info in iterar:
+            valor=valor+ (produto.preco*info.quantidade)
         return valor
+
     def items_carrinho(self):
-        return len(self.produtos.all())
+        lista_info = ProdutoCarrinho.objects.filter(carrinho=self)
+        val=0
+        for quant in lista_info:
+            val+=quant.quantidade
+        return val
 
-
-
+class ProdutoCarrinho(models.Model): # <--- through model
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    carrinho = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    quantidade = models.IntegerField()
 
 
 

@@ -65,9 +65,9 @@
     <input type="file" name="fotoP" id="Foto" required>
     <br>
 
-    <label for="isPers"><b>Personalizável:</b></label>
+         <label for="isPers"><b>Personalizável:</b></label>
     <input type="checkbox" id="isPers" name="isPers" value="True">
-    <!-- quando clica na checkbox aparece o div personalizar -->
+quando clica na checkbox aparece o div personalizar
     
     
     <button type="button" onclick="novodivpersonalizar()">Nova Pergunta</button> 
@@ -77,8 +77,6 @@
         <select class="dropdown-menu" name="questoes"  required>
             {% for questao in questoes %}
                 <option class="dropdown-item" value={{questao.id}}>{{questao.texto}}</option>
-
-            
             {% endfor %}
         </select>
 
