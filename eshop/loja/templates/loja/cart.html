@@ -17,7 +17,11 @@
 				<table class="table">
 					<tr>
 						<th><h5>Items: <strong>{{ carrinho.items_carrinho }}</strong></h5></th>
+<<<<<<< HEAD
 						<th><h5>Total:<strong> ${{carrinho.valor_carrinho |floatformat:2}}</strong></h5></th>
+=======
+						<th><h5>Total:<strong> {{ carrinho.valor_carrinho }}$</strong></h5></th>
+>>>>>>> 4677cff6026834c4a225bd56bc21ca92ada9ed49
 						<th>
 							<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'loja:checkout' %}">Checkout</a>
 						</th>
@@ -55,7 +59,7 @@
 		</div>
 	</div>
 	<p></p>
-
+	
 
 {% endblock content %}
 {% block js %}
