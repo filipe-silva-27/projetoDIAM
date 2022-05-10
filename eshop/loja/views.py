@@ -108,30 +108,33 @@ def register(request):
 
 def criaProduto(request):
     if request.method == 'POST':
-        nome = request.POST['novoP']
-        descr = request.POST['desc']
-        preco = request.POST['precoP']
-        isPersonalizavel = request.POST['isPers']
-        if isPersonalizavel == 'True':
-            atributoPers = True
-        else:
-            atributoPers = False
+        ##Buscar_foto
         foto = request.FILES['fotoP']
         fs = FileSystemStorage()
         filename = fs.save(foto.name, foto)
         uploaded_file_url = fs.url(filename)
-
-        vendedor= Vendedor.objects.filter(who=request.user.id).first() #não testado
+        ##fim
+        ##dados_base
+        nome = request.POST['novoP']
+        descr = request.POST['desc']
+        preco = request.POST['precoP']
+        isPersonalizavel = request.POST.get("isPers", None)
+        vendedor= get_object_or_404(Vendedor,who=request.user.id) 
+        ##fim
+        if isPersonalizavel is None :
+             atributoPers = False
+        else:
+            atributoPers = True
 
         novoProduto= Produto(preco=preco, nome=nome, descricao=descr, personalizavel=atributoPers, pic=uploaded_file_url, seller=vendedor)
         novoProduto.save()
-        
-        for questEscolhID in request.POST['questoes']:
-            questEscolhida = Questao.objects.filter(id=questEscolhID).first()
-            opcaoEsco = Opcao(texto="amarelo", produto=novoProduto, questao=questEscolhida)
-            opcaoEsco.save()
 
-        return HttpResponse("Produto guardado!!!!!")
+        
+        if atributoPers==True :
+            #CODIGO
+            return HttpResponse("Produto guardado!!!!!")
+        else:
+            return HttpResponse("Produto guardado!!!!!")
     else:
         questoes=Questao.objects.all()
         return render(request, "loja/criaProduto.html", {"questoes": questoes})

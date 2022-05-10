@@ -1,55 +1,17 @@
 
 {% extends 'loja/main.html' %}
 
-{% block js %}
-    <script>
 
-
- // questaoCounter tem de ser clobal mas o counter tem de ser p cada iteração
-        var counter = 1;
-        var dynamicInput = [];
-        // var questaoCounter = 1;
-        // var personalizar =[];
-
-        function addInputTo(questaoID){
-            // if (questaoID == questaoCounter){
-                var newdiv = document.createElement('div');
-                newdiv.id = dynamicInput[counter];
-                newdiv.name = "opcao"+counter+"Q"+parseInt(questaoID);
-                newdiv.innerHTML = "Entry " + (counter + 1) + " <br><input type='text' name='myInputs[]'> <input type='button' value='-' onClick='removeInput("+dynamicInput[counter]+");'>";
-                document.getElementById('formulario').appendChild(newdiv);
-                counter++;
-            // }
-        }
-  
-        function removeInput(id){
-            var elem = document.getElementById(id);
-            return elem.parentNode.removeChild(elem);
-        }
-
-        // function novodivpersonalizar(){
-        //     if (questaoCounter != 4){
-        //         var newdive = document.createElement('div');
-        //         newdive.id = personalizar[questaoCounter];
-        //         newdive.name= "questao"+questaoCounter;
-        //         newdive.innerHTML = document.getElementById('personalizar').innerHTML ;
-        //         document.getElementById('formulario').appendChild(newdive);
-        //         questaoCounter++;
-        //         counter=1;
-        //     }
-        } 
-    </script>
-    {% endblock js %}
 {% block content %}
-<form action="{% url 'loja:criaProduto' %}" id="formulario" method="post" enctype="multipart/form-data">
 
-    {% csrf_token %}
+<form action="{% url 'loja:criaProduto' %}" id="formulario" method="post" enctype="multipart/form-data"> {% csrf_token %}
 
     <button type="submit" >Criar</button>
 
     <br>
     <br>
-    <label for="novoP"><b>Nome:</b></label>
+    <!-- dados produto -->
+    <label id="name" for="novoP"><b>Nome:</b></label>
     <input type="text" name="novoP" id="novoP" required>
     <br>
 
@@ -65,22 +27,28 @@
     <input type="file" name="fotoP" id="Foto" required>
     <br>
 
-         <label for="isPers"><b>Personalizável:</b></label>
-    <input type="checkbox" id="isPers" name="isPers" value="True">
-<!--quando clica na checkbox aparece o div personalizar-->
-    
-    
+    <!--quando clica na checkbox aparece o div personalizar-->
+    <label for="isPers"><b>Personalizável:</b></label>
+    <input class ="checkbox" type="checkbox" id="isPers" name="isPers" value="True">
+      <!-- dados produto -->
+        <div id="question">
+            
+        </div>
+        <!-- dados dinamicos
+
     <button type="button" onclick="novodivpersonalizar()">Nova Pergunta</button> 
     <br>
+ -->
+
+    <!--
 
 
-    {% for q in questoes %}
     <div class="personalizar[{{q.id}}]" id="personalizar">
-<!--        <select class="dropdown-menu" name="questoes"  required>-->
-<!--            {% for questao in questoes %}-->
-<!--                <option class="dropdown-item" value={{questao.id}}>{{questao.texto}}</option>-->
-<!--            {% endfor %}-->
-<!--        </select>-->
+        <select class="dropdown-menu" name="questoes"  required>
+            {% for questao in questoes %}
+               <option class="dropdown-item" value={{questao.id}}>{{questao.texto}}</option>
+            {% endfor %}
+       </select>
         <h4> {{q.texto}}</h4>
 
 
@@ -90,12 +58,120 @@
         </div>
          
     </div>  
-    {%endfor%}
-
+        -->
+  <!-- dados dinamicos -->
      
     
-
-    
+  
 </form>
 {% endblock content %}
+
+{% block js %}
+  {% load static %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    var q=0;
+
+    $(document).on('change', '.checkbox', function() {   
+        var button;    
+        if(this.checked ) {
+            var test = $('<button/>', {
+                class: 'add_questao',
+                text: 'Adiciona Questão',
+                click: function () { Cria_Questao(); }
+            });
+            $('#question').append(test).end();            
+            }else{
+                $('.add_questao').remove();
+                $('.add_op').remove();
+                $('.questao').remove();
+                $('.questaoLabel').remove();
+                $('.depergunta').remove();
+                q=0;
+            }
+        });
+
+        function Cria_Questao(){
+            q++;
+            var quez=q;
+            if(q>4){
+                alert("nao pode criar mais");
+            }else{
+
+                var add_op = $('<button/>', {
+                class: 'add_op',
+                text: 'Adiciona Opção',
+                click: function () { adicionar(quez) ; }
+                });
+                label="<label  class=questaoLabel for=questao"+(q)+"'>Questao</label>"
+                input = jQuery('<input class=questao type="text" id="questao_'+(q)+'" name="questao_'+(q)+'" >');
+                jQuery('#formulario').append("<br class=depergunta>"+label).append(input).append("<br class=depergunta>");/*.append(add_op)*/
+                alert('questao_criada'); 
+            }
+          
+        }
+
+  
+        function adicionar(sapo){
+             alert("questao"+sapo);
+        }
+ 
+       
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    /* 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+       
+    // questaoCounter tem de ser clobal mas o counter tem de ser p cada iteração
+          var counter = 1;
+          var dynamicInput = [];
+          // var questaoCounter = 1;
+          // var personalizar =[];
+    
+         function addInputTo(questaoID){
+              // if (questaoID == questaoCounter){
+                  var newdiv = document.createElement('div');
+                  newdiv.id = dynamicInput[counter];
+                  newdiv.name = "opcao"+counter+"Q"+parseInt(questaoID);
+                  newdiv.innerHTML = "Entry " + (counter + 1) + " <br><input type='text' name='myInputs[]'> <input type='button' value='-' onClick='removeInput("+dynamicInput[counter]+");'>";
+                  document.getElementById('formulario').appendChild(newdiv);
+                  counter++;
+              // }
+         // }
+    
+          //function removeInput(id){
+            //  var elem = document.getElementById(id);
+          //    return elem.parentNode.removeChild(elem);
+        //  }
+    
+          // function novodivpersonalizar(){
+          //     if (questaoCounter != 4){
+          //         var newdive = document.createElement('div');
+          //         newdive.id = personalizar[questaoCounter];
+          //         newdive.name= "questao"+questaoCounter;
+          //         newdive.innerHTML = document.getElementById('personalizar').innerHTML ;
+          //         document.getElementById('formulario').appendChild(newdive);
+          //         questaoCounter++;
+          //         counter=1;
+          //     }
+         // } */
+      </script>
+  {% endblock js %}
 

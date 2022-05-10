@@ -4,24 +4,21 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-class Questao(models.Model):
-    texto = models.CharField(max_length=200)
-    """ pub_data = models.DateTimeField('data de publicacao') """
 
-    def __str__(self):
-        return self.texto
-
-    """ def foi_publicada_recentemente(self):
-        return self.pub_data >= timezone.now() - datetime.timedelta(days=1)
- """
-
-##oqueeeeee
+##SELLER
 class Vendedor(models.Model):
     who = models.OneToOneField(User, on_delete=models.CASCADE) #generalizacao
 
     def __str__(self):
         return self.who.username
 
+
+##Criaçãodde produto
+class Questao(models.Model):
+    texto = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.texto
 
 class Produto(models.Model):
     preco = models.IntegerField()
@@ -34,6 +31,20 @@ class Produto(models.Model):
 
     def __str__(self):
         return self.nome
+
+class QuestaoDoProduto(models.Model): #primary key composta
+    produto = models.ForeignKey(Produto, on_delete=models.DO_NOTHING)
+    questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
+
+class Opcao(models.Model): #é uma opcão de escolha de um produto é como um produto filtrado
+    texto = models.CharField(max_length=200)
+    questao_produto = models.ForeignKey(QuestaoDoProduto, on_delete=models.DO_NOTHING)
+   
+    def __str__(self):
+        return self.opcao_texto
+
+
+
 
 ##nao toca no carrinho que ta a dar
 class Cart(models.Model):
@@ -76,15 +87,6 @@ class ProdutoCarrinho(models.Model): # <--- through model
 #     def __str__(self):
 #         return self.user.username + ' disse: ' + self.text
 
-class QuestaoDoProduto(models.Model): #primary key composta
-    produto = models.ForeignKey(Produto, on_delete=models.DO_NOTHING)
-    questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
-
-class Opcao(models.Model): #é uma opcão de escolha de um produto é como um produto filtrado
-    texto = models.CharField(max_length=200)
-    produto = models.ForeignKey(Produto, on_delete=models.DO_NOTHING, default=1)
-    questao = models.ForeignKey(Questao, on_delete=models.CASCADE, default=1)
 
 
-    def __str__(self):
-        return self.opcao_texto
+
