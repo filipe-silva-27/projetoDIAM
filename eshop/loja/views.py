@@ -16,7 +16,7 @@ def loja(request):
     produtos = Produto.objects.all()
     return render(request, 'loja/loja.html' , {'products_list': produtos})
 
-##CARINHO FUNCIONA
+##CARINHO 
 @login_required(login_url='loja:login1')
 def cart(request):
     try:
@@ -60,16 +60,17 @@ def remove_one(request,produto_id):
         changes.quantidade = changes.quantidade-1
         changes.save()
         return redirect('loja:cart')
- 
 ##FIM CARRINHO
 
 def checkout(request):
-    return render(request, 'loja/checkout.html')
+    carrinho = Cart.objects.get(cliente=request.user)
+    return render(request, 'loja/checkout.html',{'cart':carrinho})
 
 def detalheProd (request, produto_id):
     produto = Produto.objects.filter(id=produto_id).first()
     return render(request, 'loja/detalhesProd.html' , {'produtoID': produto_id, 'produto': produto})
    
+#login/registo/lougout
 def login1(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('loja:loja'))
@@ -89,7 +90,6 @@ def logout1(request):
     if request.user.is_authenticated:
         logout(request)
         return HttpResponseRedirect(reverse('loja:loja'))
-#push
     else:
         return HttpResponse("Erro no Logout do Utilizador feito ")
 
@@ -102,6 +102,9 @@ def register(request):
         return HttpResponseRedirect(reverse('loja:loja'))
     else:
         return render(request,'loja/registo.html')
+
+##Fim
+
 
 def criaProduto(request):
     if request.method == 'POST':
@@ -133,3 +136,5 @@ def criaProduto(request):
         questoes=Questao.objects.all()
         return render(request, "loja/criaProduto.html", {"questoes": questoes})
 
+def seller(request):
+    return render(request,'loja/sellerpage.html')

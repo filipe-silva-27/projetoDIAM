@@ -9,10 +9,16 @@ app_name = 'loja'
 urlpatterns = [
     # path("base", views.index, name="index"),
     path("", views.loja, name="loja"),
-    path('checkout/',views.checkout, name="checkout"),
+
+    ##LOGIN_LOGOUT_REGISTO
     path("login/",views.login1,name="login1"),
-    path("logout/", views.logout1, name="logout1"),
     path("registo/",views.register,name="register"),
+    path("logout/", views.logout1, name="logout1"),
+
+    ##CHECKOUT
+    path('checkout/',views.checkout, name="checkout"),
+
+    #Criação_Detalhe_produto
     path("produto<int:produto_id>/",views.detalheProd,name="detalheProd"),
     path("novoProduto/",views.criaProduto,name="criaProduto"),
     
@@ -21,4 +27,7 @@ urlpatterns = [
     path("add_to_cart/<int:produto_id>/", views.add_cart,name="add_cart"),
     path("remove_from_cart/<int:produto_id>/", views.remove_cart,name="remove_cart"),
     path("remove_one/<int:produto_id>/",views.remove_one,name="remove_one"),
+
+    ##SellerEspace
+    path('seller/',views.seller,name="seller")
 ]
