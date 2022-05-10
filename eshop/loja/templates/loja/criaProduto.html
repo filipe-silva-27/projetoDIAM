@@ -3,7 +3,11 @@
 
 
 {% block content %}
-
+<style>
+    label{
+        width: 7em;
+    }
+</style>
 <form action="{% url 'loja:criaProduto' %}" id="formulario" method="post" enctype="multipart/form-data"> {% csrf_token %}
 
     <button type="submit" >Criar</button>
@@ -34,32 +38,9 @@
         <div id="question">
             
         </div>
-        <!-- dados dinamicos
-
-    <button type="button" onclick="novodivpersonalizar()">Nova Pergunta</button> 
-    <br>
- -->
-
-    <!--
 
 
-    <div class="personalizar[{{q.id}}]" id="personalizar">
-        <select class="dropdown-menu" name="questoes"  required>
-            {% for questao in questoes %}
-               <option class="dropdown-item" value={{questao.id}}>{{questao.texto}}</option>
-            {% endfor %}
-       </select>
-        <h4> {{q.texto}}</h4>
 
-
-        <div id="dynamicInput[0]">
-            Entry 1<br><input type="text" > 
-            <input type="button" value="+" onclick="addInputTo('{{q.id}}')" >
-        </div>
-         
-    </div>  
-        -->
-  <!-- dados dinamicos -->
      
     
   
@@ -75,18 +56,20 @@
     $(document).on('change', '.checkbox', function() {   
         var button;    
         if(this.checked ) {
-            var test = $('<button/>', {
+            var test = $('<input/>', {
+                type: 'submit',
                 class: 'add_questao',
-                text: 'Adiciona Questão',
+                value: 'Adiciona Questão',
                 click: function () { Cria_Questao(); }
             });
-            $('#question').append(test).end();            
+            $('#question').append(test).end();
+            Cria_Questao();
             }else{
                 $('.add_questao').remove();
                 $('.add_op').remove();
                 $('.questao').remove();
                 $('.questaoLabel').remove();
-                $('.depergunta').remove();
+                $('.remover').remove();
                 q=0;
             }
         });
@@ -97,23 +80,25 @@
             if(q>4){
                 alert("nao pode criar mais");
             }else{
-
-                var add_op = $('<button/>', {
+                var add_op = $('<input/>', {
+                type: 'submit',
+                value: 'Adiciona Opção',
                 class: 'add_op',
                 text: 'Adiciona Opção',
                 click: function () { adicionar(quez) ; }
                 });
                 label="<label  class=questaoLabel for=questao"+(q)+"'>Questao</label>"
-                input = jQuery('<input class=questao type="text" id="questao_'+(q)+'" name="questao_'+(q)+'" >');
-                jQuery('#formulario').append("<br class=depergunta>"+label).append(input).append("<br class=depergunta>");/*.append(add_op)*/
-                alert('questao_criada'); 
+                input = jQuery('<input class=questao type="text" id="questao_'+(q)+'" name="questao" required>');
+                jQuery('#formulario').append("<br class=remover>"+label).append(input).append(add_op).append("<br class=remover>");
+                adicionar(quez);
             }
           
         }
 
   
         function adicionar(sapo){
-             alert("questao"+sapo);
+           inputi = jQuery('<input class=questao type="text" id="opcao_'+(sapo)+'" name="questao_'+(sapo)+'" required>');
+           jQuery('#formulario').append("<label  class=questaoLabel for=opcao_"+(sapo)+"'>Opção</label> ").append(inputi).append("<br class=remover>");
         }
  
        

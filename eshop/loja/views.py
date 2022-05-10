@@ -129,15 +129,26 @@ def criaProduto(request):
         novoProduto= Produto(preco=preco, nome=nome, descricao=descr, personalizavel=atributoPers, pic=uploaded_file_url, seller=vendedor)
         novoProduto.save()
 
-        
+      
         if atributoPers==True :
-            #CODIGO
+            perguntas = request.POST.getlist('questao')
+            i=0
+            for pergunta in perguntas:
+                i+=1
+                quest = Questao(texto=pergunta,produto=novoProduto)
+                quest.save()
+                ops = request.POST.getlist('questao_'+str(i))
+                for opcao in ops:
+                    new_op = Opcao(texto=opcao,questao=quest)
+                    new_op.save()
             return HttpResponse("Produto guardado!!!!!")
         else:
             return HttpResponse("Produto guardado!!!!!")
     else:
         questoes=Questao.objects.all()
         return render(request, "loja/criaProduto.html", {"questoes": questoes})
+
+        
 
 def seller(request):
     return render(request,'loja/sellerpage.html')

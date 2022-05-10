@@ -14,12 +14,6 @@ class Vendedor(models.Model):
 
 
 ##Criaçãodde produto
-class Questao(models.Model):
-    texto = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.texto
-
 class Produto(models.Model):
     preco = models.IntegerField()
     nome = models.CharField(max_length=100)
@@ -27,18 +21,25 @@ class Produto(models.Model):
     personalizavel = models.BooleanField(default=False)
     pic = models.ImageField(upload_to='images', blank=True, null=True)
     seller = models.ForeignKey(Vendedor, on_delete=models.RESTRICT)
-    questoes = models.ManyToManyField(Questao, through='QuestaoDoProduto')
 
     def __str__(self):
         return self.nome
 
-class QuestaoDoProduto(models.Model): #primary key composta
-    produto = models.ForeignKey(Produto, on_delete=models.DO_NOTHING)
-    questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
+class Questao(models.Model):
+    texto = models.CharField(max_length=200)
+    produto = models.ForeignKey(Produto ,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.texto
+
+
+
+
 
 class Opcao(models.Model): #é uma opcão de escolha de um produto é como um produto filtrado
     texto = models.CharField(max_length=200)
-    questao_produto = models.ForeignKey(QuestaoDoProduto, on_delete=models.DO_NOTHING)
+    questao = models.ForeignKey(Questao ,on_delete=models.CASCADE)
+   
    
     def __str__(self):
         return self.opcao_texto
