@@ -1,24 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+{% extends 'loja/main.html' %}
+
+{% block js %}
     <script>
 
 
-
+ // questaoCounter tem de ser clobal mas o counter tem de ser p cada iteração
         var counter = 1;
         var dynamicInput = [];
-        var questaoCounter = 1;
-        var personalizar =[];
+        // var questaoCounter = 1;
+        // var personalizar =[];
 
-        function addInput(){
-            var newdiv = document.createElement('div');
-            newdiv.id = dynamicInput[counter];
-            newdiv.name = "opcao"+counter+"Q"+questaoCounter;
-            newdiv.innerHTML = "Entry " + (counter + 1) + " <br><input type='text' name='myInputs[]'> <input type='button' value='-' onClick='removeInput("+dynamicInput[counter]+");'>";
-            document.getElementById('formulario').appendChild(newdiv);
-            counter++;
+        function addInputTo(questaoID){
+            // if (questaoID == questaoCounter){
+                var newdiv = document.createElement('div');
+                newdiv.id = dynamicInput[counter];
+                newdiv.name = "opcao"+counter+"Q"+parseInt(questaoID);
+                newdiv.innerHTML = "Entry " + (counter + 1) + " <br><input type='text' name='myInputs[]'> <input type='button' value='-' onClick='removeInput("+dynamicInput[counter]+");'>";
+                document.getElementById('formulario').appendChild(newdiv);
+                counter++;
+            // }
         }
   
         function removeInput(id){
@@ -26,21 +27,20 @@
             return elem.parentNode.removeChild(elem);
         }
 
-        function novodivpersonalizar(){
-            if (questaoCounter != 4){
-                var newdive = document.createElement('div');
-                newdive.id = personalizar[questaoCounter];
-                newdive.name= "questao"+questaoCounter;
-                newdive.innerHTML = document.getElementById('personalizar').innerHTML ;
-                document.getElementById('formulario').appendChild(newdive);
-                questaoCounter++;
-                counter=1;
-            }
+        // function novodivpersonalizar(){
+        //     if (questaoCounter != 4){
+        //         var newdive = document.createElement('div');
+        //         newdive.id = personalizar[questaoCounter];
+        //         newdive.name= "questao"+questaoCounter;
+        //         newdive.innerHTML = document.getElementById('personalizar').innerHTML ;
+        //         document.getElementById('formulario').appendChild(newdive);
+        //         questaoCounter++;
+        //         counter=1;
+        //     }
         } 
     </script>
-</head>
-<body>
-
+    {% endblock js %}
+{% block content %}
 <form action="{% url 'loja:criaProduto' %}" id="formulario" method="post" enctype="multipart/form-data">
 
     {% csrf_token %}
@@ -67,34 +67,35 @@
 
          <label for="isPers"><b>Personalizável:</b></label>
     <input type="checkbox" id="isPers" name="isPers" value="True">
-quando clica na checkbox aparece o div personalizar
+<!--quando clica na checkbox aparece o div personalizar-->
     
     
     <button type="button" onclick="novodivpersonalizar()">Nova Pergunta</button> 
     <br>
 
-    <div class="personalizar[0]" id="personalizar">  
-        <select class="dropdown-menu" name="questoes"  required>
-            {% for questao in questoes %}
-                <option class="dropdown-item" value={{questao.id}}>{{questao.texto}}</option>
-            {% endfor %}
-        </select>
+
+    {% for q in questoes %}
+    <div class="personalizar[{{q.id}}]" id="personalizar">
+<!--        <select class="dropdown-menu" name="questoes"  required>-->
+<!--            {% for questao in questoes %}-->
+<!--                <option class="dropdown-item" value={{questao.id}}>{{questao.texto}}</option>-->
+<!--            {% endfor %}-->
+<!--        </select>-->
+        <h4> {{q.texto}}</h4>
+
 
         <div id="dynamicInput[0]">
             Entry 1<br><input type="text" > 
-            <input type="button" value="+" onclick="addInput()">
+            <input type="button" value="+" onclick="addInputTo('{{q.id}}')" >
         </div>
          
     </div>  
-
+    {%endfor%}
 
      
     
 
     
 </form>
+{% endblock content %}
 
-
-
-</body>
-</html>
