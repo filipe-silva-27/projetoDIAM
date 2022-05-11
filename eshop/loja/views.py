@@ -69,14 +69,16 @@ def checkout(request):
     carrinho = Cart.objects.get(cliente=request.user)
     return render(request, 'loja/checkout.html',{'cart':carrinho})
 
+@login_required(login_url='loja:login1')
 def detalheProd (request, produto_id):
-    produto = Produto.objects.filter(id=produto_id).first()
-    isvender=Vendedor.objects.filter(who=request.user).exists()
-    vendedor = get_object_or_404(Vendedor, who=request.user)
-    produtos_vendedor = Produto.objects.filter(seller=vendedor)
-    return render(request, 'loja/detalhesProd.html' , {'produtoID': produto_id, 'produto': produto,'isVendedor':isvender, 'listadoVend': produtos_vendedor})
-
-
+    produto= get_object_or_404(Produto,id=produto_id)
+    isvender= (produto.seller.who.id==request.user.id) 
+    questoes=Questao.objects.filter(produto_id=produto_id)
+    list=[]
+    for questao in questoes:
+        list.append(Opcao.objects.filter(questao_id=questao.id))
+    lista = zip(questoes,list)
+    return render(request, 'loja/detalhesProd.html' , {'produto': produto,'isVendedor':isvender,'perguntas':lista})
    
 #login/registo/lougout
 def login1(request):
@@ -95,6 +97,7 @@ def login1(request):
     else:
         return render(request, 'loja/login.html')
 
+@login_required(login_url='loja:login1')
 def logout1(request):
     if request.user.is_authenticated:
         logout(request)
@@ -140,10 +143,7 @@ def criaProduto(request):
 
         novoProduto= Produto(preco=preco, nome=nome, descricao=descr, personalizavel=atributoPers, pic=uploaded_file_url, seller=vendedor)
         novoProduto.save()
-
-
-
-      
+ 
         if atributoPers==True :
             perguntas = request.POST.getlist('questao')
             i=0

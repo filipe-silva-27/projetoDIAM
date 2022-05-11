@@ -28,18 +28,30 @@
                                 <span class="text-uppercase text-muted brand">by {{produto.seller.who.username}}</span>
                                 <div class="price d-flex flex-row align-items-center fs-2 fw-bold"> {{produto.preco}}€
                                 </div>
+                                
                             </div>
                             <p class="about">{{produto.descricao}}</p>
-                        
+                            <form action="">
+                            {% for questao,opcao in perguntas %}
+                            <p>{{questao}}</p>
+                                {% for chose in opcao %}
+                                <label class="radio"> <input type="radio" name="{{opcao}}" value="{{chose}}" checked> <span>{{chose}}</span> </label>
+
+                            
+                         
+                                    
+                                {% endfor %}
+                            {% endfor %}
+                        </form>
                             <!-- questoes -->
                             <div class="sizes mt-2">
-                                <h6 class="text-uppercase">Size</h6> <label class="radio"> <input type="radio" name="size" value="S" checked> <span>S</span> </label> <label class="radio"> <input type="radio" name="size" value="M"> <span>M</span> </label> <label class="radio"> <input type="radio" name="size" value="L"> <span>L</span> </label> <label class="radio"> <input type="radio" name="size" value="XL"> <span>XL</span> </label> <label class="radio"> <input type="radio" name="size" value="XXL"> <span>XXL</span> </label>
+                               
                             </div>
                             <br>
-                            {% if isVendedor and produto in listadoVend %}
-                            <a class="btn btn-danger float-right " href="{% url 'loja:apagar' produtoID %}">Apagar Produto</a>
+                            {% if isVendedor %}
+                            <a class="btn btn-danger float-right " href="{% url 'loja:apagar' produto.id %}">Apagar Produto</a>
                             {% else %}
-                            <a class="btn btn-danger float-right " href="{% url 'loja:add_cart' produtoID %}">Adicionar ao carrinho</a>
+                            <a class="btn btn-danger float-right " href="{% url 'loja:add_cart' produto.id %}">Adicionar ao carrinho</a>
                             {% endif %}
                             
                             

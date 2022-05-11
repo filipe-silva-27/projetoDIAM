@@ -18,9 +18,9 @@
             <input class="checkbox" type="checkbox" placeholder="Quero ser Vendedor" name="isVendedor" id="isVendedor"><br>
 
 
-            <form class="inputEmpresa" action="{% url 'loja:detailConta' %}" method="post">
+            <form id="inputEmpresa" action="{% url 'loja:detailConta' %}" method="post">
                 {% csrf_token %}    
-                <input class="empresa" type="text" name="empresa" id="empresa" required><br>
+                <input  class="empresa" type="text" name="empresa" id="empresa" pattern="[a-zA-Z]" required><br>
                 <button type="submit" class="submitEmpresa">Guardar!</button>
             </form>
         {%endif%}
@@ -31,26 +31,28 @@
 {% endblock content %}
 
 {% block js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 <script>
-    $(document).on('change', '.checkbox', function() {
-        var button;
-        if(this.checked ) {
-            var test = $('<input/>', {
-                type: 'submit',
-                class: 'add_questao',
-                value: 'Adiciona Questão',
-                click: function () { alert('yess') }
-            });
-            $('#question').append(test).end();
-            Cria_Questao();
-        }else{
-                $('.add_questao').remove();
-                $('.add_op').remove();
-                $('.questao').remove();
-                $('.questaoLabel').remove();
-                $('.remover').remove();
 
-        }
-        });
+$('#inputEmpresa').validate({ // initialize the plugin
+    rules: {
+        empresa: {
+          lettersonly: true,
+          required:true,
+          minlength:5
+      },
+   
+    },
+    submitHandler: function (form) { 
+        alert('valid form submitted'); 
+        return true; 
+    }
+});
+
+jQuery.validator.addMethod("lettersonly", function(value, element) {
+  return this.optional(element) || /^[a-z]+$/i.test(value);
+}, "Letters only please"); 
+
 </script>
-{%endblock%}
+{% endblock js %}
