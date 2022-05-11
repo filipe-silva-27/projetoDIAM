@@ -27,7 +27,10 @@ urlpatterns = [
     path("add_to_cart/<int:produto_id>/", views.add_cart,name="add_cart"),
     path("remove_from_cart/<int:produto_id>/", views.remove_cart,name="remove_cart"),
     path("remove_one/<int:produto_id>/",views.remove_one,name="remove_one"),
+    path("search/", views.search, name="search"),
+
 
     ##SellerEspace
-    path('seller/',views.seller,name="seller")
+    path('seller/',views.seller,name="seller"),
+    path("delete_product/<int:produto_id>/", views.apagar,name="apagar"),       
 ]

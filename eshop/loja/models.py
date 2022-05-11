@@ -32,10 +32,6 @@ class Questao(models.Model):
     def __str__(self):
         return self.texto
 
-
-
-
-
 class Opcao(models.Model): #é uma opcão de escolha de um produto é como um produto filtrado
     texto = models.CharField(max_length=200)
     questao = models.ForeignKey(Questao ,on_delete=models.CASCADE)
@@ -43,9 +39,6 @@ class Opcao(models.Model): #é uma opcão de escolha de um produto é como um pr
    
     def __str__(self):
         return self.opcao_texto
-
-
-
 
 ##nao toca no carrinho que ta a dar
 class Cart(models.Model):

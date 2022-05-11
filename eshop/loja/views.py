@@ -68,7 +68,10 @@ def checkout(request):
 
 def detalheProd (request, produto_id):
     produto = Produto.objects.filter(id=produto_id).first()
-    return render(request, 'loja/detalhesProd.html' , {'produtoID': produto_id, 'produto': produto})
+    isvender=Vendedor.objects.filter(who=request.user).exists()
+    return render(request, 'loja/detalhesProd.html' , {'produtoID': produto_id, 'produto': produto,'isVendedor':isvender})
+
+
    
 #login/registo/lougout
 def login1(request):
@@ -157,4 +160,20 @@ def criaProduto(request):
 
 
 def seller(request):
-    return render(request,'loja/sellerpage.html')
+    vendedor = get_object_or_404(Vendedor, who=request.user)
+    produtos_vendedor = Produto.objects.filter(seller=vendedor)
+    return render(request,'loja/sellerpage.html', {'products_list': produtos_vendedor})
+
+def search(request):
+    pesquisa = request.GET.get('search')
+    resultado = Produto.objects.filter(nome__icontains=pesquisa)
+    return render(request, 'loja/loja.html' , {'products_list': resultado})
+
+def apagar(request, produto_id):
+    produto = get_object_or_404(Produto, pk=produto_id)
+    Produto.delete(produto)
+    return redirect('loja:seller')
+
+
+
+
