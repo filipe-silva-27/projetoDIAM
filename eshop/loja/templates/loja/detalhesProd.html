@@ -30,13 +30,18 @@
                                 </div>
                             </div>
                             <p class="about">{{produto.descricao}}</p>
-                            
+                        
                             <!-- questoes -->
                             <div class="sizes mt-2">
                                 <h6 class="text-uppercase">Size</h6> <label class="radio"> <input type="radio" name="size" value="S" checked> <span>S</span> </label> <label class="radio"> <input type="radio" name="size" value="M"> <span>M</span> </label> <label class="radio"> <input type="radio" name="size" value="L"> <span>L</span> </label> <label class="radio"> <input type="radio" name="size" value="XL"> <span>XL</span> </label> <label class="radio"> <input type="radio" name="size" value="XXL"> <span>XXL</span> </label>
                             </div>
                             <br>
+                            {% if isVendedor and produto in listadoVend %}
+                            <a class="btn btn-danger float-right " href="{% url 'loja:apagar' produtoID %}">Apagar Produto</a>
+                            {% else %}
                             <a class="btn btn-danger float-right " href="{% url 'loja:add_cart' produtoID %}">Adicionar ao carrinho</a>
+                            {% endif %}
+                            
                             
                         </div>
                     </div>

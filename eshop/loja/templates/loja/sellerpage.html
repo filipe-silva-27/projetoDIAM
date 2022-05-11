@@ -1,1 +1,31 @@
 {% extends 'loja/main.html' %}
+
+{% block content %}
+
+<div class="card-group">
+    {% for product in products_list %}
+    <div class="card m-2 mb-3" style="min-width: 20%; max-width: 20%;">
+        <img class="card-img-top" width="240px" height="180px" style="object-fit:contain;" src="{{product.pic}}">
+        
+                <div class="card-title justify-content-between">
+                <h6><strong> <a class="ps-2" href="{% url 'loja:detalheProd' product.id %}">{{product.nome}}</a></strong></h6>
+                
+                <!-- <a target="_blank" class="btn btn-info pull-right" href="{ url 'loja:addCart' product.id %}">
+                Add cart
+                </a> TIRAR DAQUI POIS È PRECISO PERSONALIZAR PRIMEIRO!!!! USAR ESTE BOTAO NO DETALHE DO PRODUTO-->
+                <h5 class="ps-2 me-2" style="display:inline-block; float:right">{{product.preco}} €</h5>
+            </div>
+
+        
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock content %}
+
+
+
+
+
+

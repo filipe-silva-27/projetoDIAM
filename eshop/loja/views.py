@@ -12,9 +12,12 @@ from django.core.files.storage import FileSystemStorage
 def index(request):
     return  HttpResponse(render(request, 'loja/main.html' ))
 
+@login_required(login_url='loja:login1')
 def loja(request):
     produtos = Produto.objects.all()
     return render(request, 'loja/loja.html' , {'products_list': produtos})
+
+   
 
 ##CARINHO 
 @login_required(login_url='loja:login1')
@@ -68,7 +71,12 @@ def checkout(request):
 
 def detalheProd (request, produto_id):
     produto = Produto.objects.filter(id=produto_id).first()
-    return render(request, 'loja/detalhesProd.html' , {'produtoID': produto_id, 'produto': produto})
+    isvender=Vendedor.objects.filter(who=request.user).exists()
+    vendedor = get_object_or_404(Vendedor, who=request.user)
+    produtos_vendedor = Produto.objects.filter(seller=vendedor)
+    return render(request, 'loja/detalhesProd.html' , {'produtoID': produto_id, 'produto': produto,'isVendedor':isvender, 'listadoVend': produtos_vendedor})
+
+
    
 #login/registo/lougout
 def login1(request):
@@ -154,7 +162,32 @@ def criaProduto(request):
         questoes=Questao.objects.all()
         return render(request, "loja/criaProduto.html", {"questoes": questoes})
 
+def detailConta(request):
+    if request.method == 'POST':
+        nomeEmpresa=request.POST['empresa']
+        novoVendedor = Vendedor(who=request.user, empresa=nomeEmpresa)
+        novoVendedor.save()
+        return HttpResponseRedirect(reverse('loja:loja'))
+    else:
+        isVendedor = Vendedor.objects.filter(who=request.user).exists()
+        return render(request,'loja/detalhesConta.html', {"isVendedor" : isVendedor})
 
 
 def seller(request):
-    return render(request,'loja/sellerpage.html')
+    vendedor = get_object_or_404(Vendedor, who=request.user)
+    produtos_vendedor = Produto.objects.filter(seller=vendedor)
+    return render(request,'loja/sellerpage.html', {'products_list': produtos_vendedor})
+
+def search(request):
+    pesquisa = request.GET.get('search')
+    resultado = Produto.objects.filter(nome__icontains=pesquisa)
+    return render(request, 'loja/loja.html' , {'products_list': resultado})
+
+def apagar(request, produto_id):
+    produto = get_object_or_404(Produto, pk=produto_id)
+    Produto.delete(produto)
+    return redirect('loja:seller')
+
+
+
+

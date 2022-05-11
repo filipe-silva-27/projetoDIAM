@@ -1,0 +1,56 @@
+{% extends 'loja/main.html' %}
+
+{% block content %}
+{% if request.user.is_authenticated %}
+{% if sucess_message %}
+<p style="color:green">{{sucess_message}}</p>
+{% endif %}
+<!--<center><di onmouseenter="mostra_info()" onmouseleave="mostra_info()" style="width:200px;"> INFORMAÇÕES DA CONTA </di></center>-->
+    <ul id="infoPerfil" class="info_group">
+        <li>Nome:{{user.username}}</li>
+        <li>Email:{{user.email}}</li>
+        {% if isVendedor %}
+
+            <li>Empresa: {{request.user.vendedor.empresa}}</li>
+        {% else %}
+
+            <label style="width: 6em;" for="isVendedor"><b>Clica aqui para seres Vendedor</b></label>
+            <input class="checkbox" type="checkbox" placeholder="Quero ser Vendedor" name="isVendedor" id="isVendedor"><br>
+
+
+            <form class="inputEmpresa" action="{% url 'loja:detailConta' %}" method="post">
+                {% csrf_token %}    
+                <input class="empresa" type="text" name="empresa" id="empresa" required><br>
+                <button type="submit" class="submitEmpresa">Guardar!</button>
+            </form>
+        {%endif%}
+    </ul>
+{% else %}
+    <center><h1>APENAS PARA UTILIZADORES LOGADOS</h1></center>
+{% endif %}
+{% endblock content %}
+
+{% block js %}
+<script>
+    $(document).on('change', '.checkbox', function() {
+        var button;
+        if(this.checked ) {
+            var test = $('<input/>', {
+                type: 'submit',
+                class: 'add_questao',
+                value: 'Adiciona Questão',
+                click: function () { alert('yess') }
+            });
+            $('#question').append(test).end();
+            Cria_Questao();
+        }else{
+                $('.add_questao').remove();
+                $('.add_op').remove();
+                $('.questao').remove();
+                $('.questaoLabel').remove();
+                $('.remover').remove();
+
+        }
+        });
+</script>
+{%endblock%}
