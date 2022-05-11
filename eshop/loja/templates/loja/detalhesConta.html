@@ -2,6 +2,9 @@
 
 {% block content %}
 {% if request.user.is_authenticated %}
+{% if sucess_message %}
+<p style="color:green">{{sucess_message}}</p>
+{% endif %}
 <!--<center><di onmouseenter="mostra_info()" onmouseleave="mostra_info()" style="width:200px;"> INFORMAÇÕES DA CONTA </di></center>-->
     <ul id="infoPerfil" class="info_group">
         <li>Nome:{{user.username}}</li>
@@ -15,9 +18,11 @@
             <input class="checkbox" type="checkbox" placeholder="Quero ser Vendedor" name="isVendedor" id="isVendedor"><br>
 
 
-        <form class="inputEmpresa" action="{% url 'loja:detailConta' %}">
-             <input class="empresa" type="text" name="empresa" id="empresa" required><br>
-        </form>
+            <form class="inputEmpresa" action="{% url 'loja:detailConta' %}" method="post">
+                {% csrf_token %}    
+                <input class="empresa" type="text" name="empresa" id="empresa" required><br>
+                <button type="submit" class="submitEmpresa">Guardar!</button>
+            </form>
         {%endif%}
     </ul>
 {% else %}
