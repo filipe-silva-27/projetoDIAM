@@ -12,9 +12,12 @@ from django.core.files.storage import FileSystemStorage
 def index(request):
     return  HttpResponse(render(request, 'loja/main.html' ))
 
+@login_required(login_url='loja:login1')
 def loja(request):
     produtos = Produto.objects.all()
     return render(request, 'loja/loja.html' , {'products_list': produtos})
+
+   
 
 ##CARINHO 
 @login_required(login_url='loja:login1')
@@ -69,7 +72,9 @@ def checkout(request):
 def detalheProd (request, produto_id):
     produto = Produto.objects.filter(id=produto_id).first()
     isvender=Vendedor.objects.filter(who=request.user).exists()
-    return render(request, 'loja/detalhesProd.html' , {'produtoID': produto_id, 'produto': produto,'isVendedor':isvender})
+    vendedor = get_object_or_404(Vendedor, who=request.user)
+    produtos_vendedor = Produto.objects.filter(seller=vendedor)
+    return render(request, 'loja/detalhesProd.html' , {'produtoID': produto_id, 'produto': produto,'isVendedor':isvender, 'listadoVend': produtos_vendedor})
 
 
    
@@ -159,10 +164,8 @@ def criaProduto(request):
 
 def detailConta(request):
     if request.method == 'POST':
-
-
+        return HttpResponse("Produto guardado!!!!!")
     else:
-
         isVendedor = Vendedor.objects.filter(who=request.user).exists()
         return render(request,'loja/detalhesConta.html', {"isVendedor" : isVendedor})
 
