@@ -38,10 +38,11 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item" href="{%url 'loja:detailConta' %}">Minha Conta</a></li>
-
+                  {% if isvender %}
                   <li><hr class="dropdown-divider"></li>
-                
+                  
                   <li><a class="dropdown-item" href="{%url 'loja:seller' %}">Espaço vendedor</a></li>
+                  {% endif %}
                 </ul>
                 {%endif%}
             </ul>

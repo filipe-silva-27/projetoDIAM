@@ -15,7 +15,8 @@ def index(request):
 @login_required(login_url='loja:login1')
 def loja(request):
     produtos = Produto.objects.all()
-    return render(request, 'loja/loja.html' , {'products_list': produtos})
+    isVendedor = Vendedor.objects.filter(who=request.user).exists()
+    return render(request, 'loja/loja.html' , {'products_list': produtos,'isvender':isVendedor})
 
    
 
@@ -164,14 +165,7 @@ def criaProduto(request):
 
 def detailConta(request):
     if request.method == 'POST':
-<<<<<<< HEAD
         return redirect('loja:seller')
-=======
-        nomeEmpresa=request.POST['empresa']
-        novoVendedor = Vendedor(who=request.user, empresa=nomeEmpresa)
-        novoVendedor.save()
-        return HttpResponseRedirect(reverse('loja:loja'))
->>>>>>> d42477051b39d7a61910b6b8065225d24be4c7ad
     else:
         isVendedor = Vendedor.objects.filter(who=request.user).exists()
         return render(request,'loja/detalhesConta.html', {"isVendedor" : isVendedor})
