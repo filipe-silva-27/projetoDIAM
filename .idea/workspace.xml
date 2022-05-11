@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="98252456-aa5c-4a20-aa0c-20984dc5bd00" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/eshop/loja/static/js/newProduct.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eshop/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eshop/loja/templates/loja/criaProduto.html" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/templates/loja/criaProduto.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eshop/loja/templates/loja/loja.html" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/templates/loja/loja.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eshop/loja/templates/loja/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/templates/loja/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eshop/loja/templates/loja/registo.html" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/templates/loja/registo.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eshop/loja/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/eshop/loja/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +41,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Python/sem4/pythonProject" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -61,6 +62,7 @@
       <workItem from="1651994811880" duration="736000" />
       <workItem from="1652186960030" duration="369000" />
       <workItem from="1652187345053" duration="2378000" />
+      <workItem from="1652261005984" duration="1571000" />
     </task>
     <servers />
   </component>
@@ -77,16 +79,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/eshop/loja/views.py</url>
-          <line>88</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -100,6 +100,8 @@ def register(request):
         email=request.POST['email']
         password= request.POST['psw']
         User.objects.create_user(username=username,email=email,password=password)
+        isSeller = request.POST.get("isVendedor", None)
+
         return HttpResponseRedirect(reverse('loja:loja'))
     else:
         return render(request,'loja/registo.html')
@@ -131,7 +133,7 @@ def criaProduto(request):
         novoProduto= Produto(preco=preco, nome=nome, descricao=descr, personalizavel=atributoPers, pic=uploaded_file_url, seller=vendedor)
         novoProduto.save()
 
-      
+
 
       
         if atributoPers==True :
