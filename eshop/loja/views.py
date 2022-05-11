@@ -82,7 +82,8 @@ def login1(request):
             login(request, user)
             return HttpResponseRedirect(reverse('loja:loja'))
         else:
-            return HttpResponse("Erro ao logar Utilizador")
+            error_message = "Your username or password may be incorrect" 
+            return render(request, 'loja/login.html',{'error_message': error_message})
     else:
         return render(request, 'loja/login.html')
 
@@ -120,6 +121,7 @@ def criaProduto(request):
         preco = request.POST['precoP']
         isPersonalizavel = request.POST.get("isPers", None)
         vendedor= get_object_or_404(Vendedor,who=request.user.id) 
+    
         ##fim
         if isPersonalizavel is None :
              atributoPers = False
@@ -128,6 +130,8 @@ def criaProduto(request):
 
         novoProduto= Produto(preco=preco, nome=nome, descricao=descr, personalizavel=atributoPers, pic=uploaded_file_url, seller=vendedor)
         novoProduto.save()
+
+      
 
       
         if atributoPers==True :
@@ -148,7 +152,7 @@ def criaProduto(request):
         questoes=Questao.objects.all()
         return render(request, "loja/criaProduto.html", {"questoes": questoes})
 
-        
+
 
 def seller(request):
     return render(request,'loja/sellerpage.html')

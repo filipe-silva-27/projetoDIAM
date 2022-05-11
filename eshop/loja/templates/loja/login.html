@@ -11,6 +11,10 @@
 <!--  </div>-->
 
   <div class="container">
+    {% if error_message %}
+    <p style="color:red">{{ error_message }}</p>
+    {% endif %}
+
     <label for="uname"><b>Username</b></label>
     <input type="text" placeholder="Enter Username" name="uname" required>
 
