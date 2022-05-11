@@ -163,10 +163,16 @@ def criaProduto(request):
         return render(request, "loja/criaProduto.html", {"questoes": questoes})
 
 def detailConta(request):
+    request.session.flush()
+    isVendedor = Vendedor.objects.filter(who=request.user).exists()
     if request.method == 'POST':
-        return HttpResponse("Produto guardado!!!!!")
+        nomeEmpresa=request.POST['empresa']#####################fazer isto
+        novoVendedor = Vendedor(who=request.user, empresa=nomeEmpresa)
+        novoVendedor.save()
+        sucess_message="Registado com sucesso"
+        return render(request,'loja/detalhesConta.html', {"isVendedor" : isVendedor,'sucess_message':sucess_message})
+        
     else:
-        isVendedor = Vendedor.objects.filter(who=request.user).exists()
         return render(request,'loja/detalhesConta.html', {"isVendedor" : isVendedor})
 
 
