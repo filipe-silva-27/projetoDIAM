@@ -154,6 +154,14 @@ def criaProduto(request):
         questoes=Questao.objects.all()
         return render(request, "loja/criaProduto.html", {"questoes": questoes})
 
+def detailConta(request):
+    if request.method == 'POST':
+
+
+    else:
+
+        isVendedor = Vendedor.objects.filter(who=request.user).exists()
+        return render(request,'loja/detalhesConta.html', {"isVendedor" : isVendedor})
 
 
 def seller(request):
