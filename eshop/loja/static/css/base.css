@@ -95,3 +95,8 @@ a{
 .card{
 	max-width: 108rem;
 }
+
+.btn .btn-outline-success .my-2 .my-sm-0 {
+	display: center;
+}
+ 

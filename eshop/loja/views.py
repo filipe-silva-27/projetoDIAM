@@ -155,19 +155,23 @@ def criaProduto(request):
                 for opcao in ops:
                     new_op = Opcao(texto=opcao,questao=quest)
                     new_op.save()
-            return HttpResponse("Produto guardado!!!!!")
+            return redirect('loja:seller')
         else:
-            return HttpResponse("Produto guardado!!!!!")
+            return redirect('loja:seller')
     else:
         questoes=Questao.objects.all()
         return render(request, "loja/criaProduto.html", {"questoes": questoes})
 
 def detailConta(request):
     if request.method == 'POST':
+<<<<<<< HEAD
+        return redirect('loja:seller')
+=======
         nomeEmpresa=request.POST['empresa']
         novoVendedor = Vendedor(who=request.user, empresa=nomeEmpresa)
         novoVendedor.save()
         return HttpResponseRedirect(reverse('loja:loja'))
+>>>>>>> d42477051b39d7a61910b6b8065225d24be4c7ad
     else:
         isVendedor = Vendedor.objects.filter(who=request.user).exists()
         return render(request,'loja/detalhesConta.html', {"isVendedor" : isVendedor})
