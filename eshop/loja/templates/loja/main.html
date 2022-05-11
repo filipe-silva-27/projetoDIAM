@@ -30,18 +30,20 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{%url 'loja:loja' %}">Home</a>
               </li>
- 
+
+              {%if user.is_authenticated%}
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="{%url 'loja:loja' %}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Produtos
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="{%url 'loja:loja' %}">Categoria 1</a></li>
-                  <li><a class="dropdown-item" href="{%url 'loja:loja' %}">Categoria 2</a></li>
+                  <li><a class="dropdown-item" href="{%url 'loja:detailConta' %}">Minha Conta</a></li>
+
                   <li><hr class="dropdown-divider"></li>
                 
                   <li><a class="dropdown-item" href="{%url 'loja:seller' %}">Espaço vendedor</a></li>
                 </ul>
+                {%endif%}
             </ul>
             <!-- <form class="d-flex">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -54,7 +56,6 @@
                 {% else %}
                 <!-- <a href="{% url 'loja:cart' %}"class="btn btn-warning">Ver carrinho</a> -->
                 <a href="{% url 'loja:logout1' %}" class="btn btn-warning">Logout</a>
-
                 {% endif %}
                 <a class="btn btn-warning" href="{% url 'loja:cart' %}">
                   Ver carrinho

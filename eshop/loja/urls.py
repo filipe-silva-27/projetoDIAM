@@ -10,6 +10,9 @@ urlpatterns = [
     # path("base", views.index, name="index"),
     path("", views.loja, name="loja"),
 
+    #DETALHES DA CONTA
+    path("detalhesConta/", views.detailConta, name="detailConta"),
+
     ##LOGIN_LOGOUT_REGISTO
     path("login/",views.login1,name="login1"),
     path("registo/",views.register,name="register"),

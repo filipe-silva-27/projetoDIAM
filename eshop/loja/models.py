@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 ##SELLER
 class Vendedor(models.Model):
     who = models.OneToOneField(User, on_delete=models.CASCADE) #generalizacao
+    # empresa = models.CharField(max_length=100)
 
     def __str__(self):
         return self.who.username
