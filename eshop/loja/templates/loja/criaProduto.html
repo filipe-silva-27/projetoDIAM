@@ -92,71 +92,16 @@
                 jQuery('#formulario').append("<br class=remover>"+label).append(input).append(add_op).append("<br class=remover>");
                 adicionar(quez);
             }
+  
           
         }
-
-  
+      
         function adicionar(sapo){
            inputi = jQuery('<input class=questao type="text" id="opcao_'+(sapo)+'" name="questao_'+(sapo)+'" required>');
            jQuery('#formulario').append("<label  class=questaoLabel for=opcao_"+(sapo)+"'>Opção</label> ").append(inputi).append("<br class=remover>");
         }
  
-       
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    /* 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-       
-    // questaoCounter tem de ser clobal mas o counter tem de ser p cada iteração
-          var counter = 1;
-          var dynamicInput = [];
-          // var questaoCounter = 1;
-          // var personalizar =[];
-    
-         function addInputTo(questaoID){
-              // if (questaoID == questaoCounter){
-                  var newdiv = document.createElement('div');
-                  newdiv.id = dynamicInput[counter];
-                  newdiv.name = "opcao"+counter+"Q"+parseInt(questaoID);
-                  newdiv.innerHTML = "Entry " + (counter + 1) + " <br><input type='text' name='myInputs[]'> <input type='button' value='-' onClick='removeInput("+dynamicInput[counter]+");'>";
-                  document.getElementById('formulario').appendChild(newdiv);
-                  counter++;
-              // }
-         // }
-    
-          //function removeInput(id){
-            //  var elem = document.getElementById(id);
-          //    return elem.parentNode.removeChild(elem);
-        //  }
-    
-          // function novodivpersonalizar(){
-          //     if (questaoCounter != 4){
-          //         var newdive = document.createElement('div');
-          //         newdive.id = personalizar[questaoCounter];
-          //         newdive.name= "questao"+questaoCounter;
-          //         newdive.innerHTML = document.getElementById('personalizar').innerHTML ;
-          //         document.getElementById('formulario').appendChild(newdive);
-          //         questaoCounter++;
-          //         counter=1;
-          //     }
-         // } */
+
       </script>
   {% endblock js %}
 
