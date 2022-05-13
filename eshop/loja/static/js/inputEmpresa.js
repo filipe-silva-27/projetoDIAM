@@ -1,6 +1,7 @@
 
 $("#inputEmpresa").hide();
 $(document).on('change', '#isVendedor', function() {   
+    alert()
     if($('#isVendedor').is(":checked"))   
             $("#inputEmpresa").show();
         else
@@ -17,7 +18,7 @@ $('#inputEmpresa').validate({ // initialize the plugin
    
     },
     submitHandler: function (form) { 
-        alert('valid form submitted'); 
+        alert('Parabéns! Tornaste-te vendedor'); 
         return true; 
     }
 });
