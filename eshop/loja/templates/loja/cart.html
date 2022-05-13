@@ -17,7 +17,7 @@
 				<table class="table">
 					<tr>
 						<th><h5>Items: <strong>{{ carrinho.items_carrinho }}</strong></h5></th>
-						<th><h5>Total:<strong> {{carrinho.valor_carrinho |floatformat:2}}€</strong></h5></th>
+						<th><h5>Total:<strong> {{carrinho.valor_carrinho |floatformat:2}}€</strong></h5></th> <!-- para arredondar a 2 casas decimais -->
 						<th>
 							<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'loja:checkout' %}">Checkout</a>
 						</th>
@@ -43,7 +43,7 @@
 					<div style="flex:1">
 						<p class="quantity">{{info.quantidade}}<!-- {{item.quantity}} --></p>
 						<div class="quantity">
-							<a href="{% url 'loja:add_cart' produto.id %}"> <img style="width: 2em; object-fit: cover;  transform: scale(1.03);								" class="chg-quantity update-cart "  src="{% static  'images/arrow-up.png' %}"> </a>
+							<a href="{% url 'loja:add_cart' produto.id %}"> <img style="width: 2em; object-fit: cover;  transform: scale(1.03);" class="chg-quantity update-cart "  src="{% static  'images/arrow-up.png' %}"> </a>
 							<!-- adiciona as setas que adiciona ou retiram o numero de itens desse produto-->
 							<a href="{% url 'loja:remove_one' produto.id %}"><img style="width: 2em;" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}"></a>
 						</div>
@@ -54,12 +54,8 @@
 			</div>
 		</div>
 	</div>
-	<p></p>
-	
 
 {% endblock content %}
 {% block js %}
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<script>
-</script>
 {% endblock js %}
