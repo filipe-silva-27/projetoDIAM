@@ -1,4 +1,4 @@
-    {% extends "loja/main.html" %}
+{% extends "loja/main.html" %}
 
 {% load static %}
 
@@ -44,10 +44,7 @@
                             {% endif %}
 
                         </form>
-                            <!-- questoes -->
-                            <div class="sizes mt-2">
-                               
-                            </div>
+                    
                             <br>
                             {% if isvender %}
                             <a class="btn btn-danger float-right " href="{% url 'loja:apagar' produto.id %}">Apagar Produto</a>
