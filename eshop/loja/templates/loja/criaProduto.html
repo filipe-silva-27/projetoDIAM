@@ -8,45 +8,55 @@
         width: 7em;
     }
 </style>
-<form action="{% url 'loja:criaProduto' %}" id="formulario" method="post" enctype="multipart/form-data"> {% csrf_token %}
+<center>
+<form  style="width: 70%; background-color:beige;" action="{% url 'loja:criaProduto' %}" id="formulario" method="post" enctype="multipart/form-data"> {% csrf_token %}
 
-    <button type="submit" >Criar</button>
+
 
     <br>
     <br>
     <!-- dados produto -->
+    <div class="form-group ">
     <label id="name" for="novoP"><b>Nome:</b></label>
-    <input type="text" name="novoP" id="novoP" required>
+    <input class="form-control" type="text" name="novoP" id="novoP" required>
     <br>
+</div>
 
+    <div class="form-group">
     <label for="desc"><b>Descrição:</b></label>
-    <input type="text" name="desc" id="desc" required>
+    <input class="form-control" type="text" name="desc" id="desc" required>
     <br>
+</div>
 
+    <div class="form-group"></div>
     <label for="precoP"><b>Preço:</b></label>
-    <input type="number" name="precoP" id="precoP" required>
+    <input class="form-control" type="number" name="precoP" id="precoP" required>
     <br>
+</div>
 
+    <div class="form-group">
     <label for="Foto"><b>Foto:</b></label>
-    <input type="file" name="fotoP" id="Foto" required>
+    <input class="form-control" type="file" name="fotoP" id="Foto" required>
     <br>
-
+    </div>
     <!--quando clica na checkbox aparece o div personalizar-->
     <label for="isPers"><b>Personalizável:</b></label>
     <input class ="checkbox" type="checkbox" id="isPers" name="isPers" value="True">
     
         <div id="question">
         </div>
-    
-        <div id="questao_1"></div>
-        <div id="questao_2"></div>
-        <div id="questao_3"></div>
-        <div id="questao_4"></div>
+        <div style="background-color:whitesmoke;">
+        <div class="form-group" id="questao_1"></div>
+        <div class="form-group" id="questao_2"></div>
+        <div class="form-group" id="questao_3"></div>
+        <div class="form-group" id="questao_4"></div>
+    </div>
   
      
     
-  
+    <button type="submit" class="btn btn-primary" >Criar</button>
 </form>
+</center>
 {% endblock content %}
 
 {% block js %}
@@ -62,6 +72,8 @@
             Cria_Questao();
         }else{
                 $('.remover').remove();
+           //    $('.form-control').remove();
+
                 q=0;
         }
         });
@@ -73,8 +85,8 @@
                 alert("nao pode criar mais");
             }else{
                 var add_op = $('<input/>', { type: 'submit', value: 'Adiciona Opção', class: 'remover', text: 'Adiciona Opção', click: function () { adicionar(quez) ; }});
-                label="<label  class=remover for=questao"+(q)+"'>Questao</label>"
-                input = jQuery('<input class=remover type="text" id="questao_'+(q)+'" name="questao" required>');
+                label="<label  class=remover for=questao"+(q)+"'><b>Questão:</b></label>"
+                input = jQuery('<input class="remover form-control" type="text" id="questao_'+(q)+'" name="questao" required>');
                 jQuery("#questao_"+q).append("<br class=remover>"+label).append(input).append(add_op).append("<br class=remover>");
                 adicionar(quez);
             }
@@ -83,8 +95,8 @@
         }
       
         function adicionar(sapo){
-           inputi = jQuery('<input class=remover type="text" id="opcao_'+(sapo)+'" name="questao_'+(sapo)+'" required>');
-           jQuery("#questao_"+sapo).append("<label  class=remover for=opcao_"+(sapo)+"'>Opção</label> ").append(inputi).append("<br class=remover>");
+           inputi = jQuery('<input class="remover form-control" type="text" id="opcao_'+(sapo)+'" name="questao_'+(sapo)+'" required>');
+           jQuery("#questao_"+sapo).append("<label  class=remover for=opcao_"+(sapo)+"'><b>Opção:</b></label> ").append(inputi).append("<br class=remover>");
         }
  
 
