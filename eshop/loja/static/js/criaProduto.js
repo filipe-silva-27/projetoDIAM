@@ -8,8 +8,6 @@
             Cria_Questao();
         }else{
                 $('.remover').remove();
-           //    $('.form-control').remove();
-
                 q=0;
         }
         });
@@ -20,17 +18,22 @@
         if(q>4){
             alert("nao pode criar mais");
         }else{
-            var add_op = $('<input/>', { type: 'submit', value: 'Adiciona Opção', class: 'remover', text: 'Adiciona Opção', click: function () { adicionar(nrQuestao) ; }});
+            var add_op = $('<input/>', { type: 'submit', value: 'Adiciona Opção', class: 'remover', text: 'Adiciona Opção', click: function () { adicionarOp(nrQuestao) ; }});
             label="<label  class=remover for=questao"+(q)+"'><b>Questão:</b></label>"
             input = jQuery('<input class="remover form-control" type="text" id="questao_'+(q)+'" name="questao" required>');
-            jQuery("#questao_"+q).append("<br class=remover>"+label).append(input).append(add_op).append("<br class=remover>");
-            adicionar(nrQuestao);
+            btnEliminaQ = '<button class=remover id="eliminaQ" onclick="Elimina_Questao('+nrQuestao+');"> Eliminar Questão </button>'
+            jQuery("#questao_"+q).append("<br class=remover>"+label).append(input).append(add_op).append(btnEliminaQ).append("<br class=remover>");
+            adicionarOp(nrQuestao);
         }
-
-        
-    }
     
-    function adicionar(nrOpcao){
+    }
+
+    function Elimina_Questao(nrQue){
+        jQuery("#questao_" + nrQue).remove();
+        q--;
+    } 
+    
+    function adicionarOp(nrOpcao){
         inputi = jQuery('<input class="remover form-control" type="text" id="opcao_'+(nrOpcao)+'" name="questao_'+(nrOpcao)+'" required>');
         jQuery("#questao_"+nrOpcao).append("<label  class=remover for=opcao_"+(nrOpcao)+"'><b>Opção:</b></label> ").append(inputi).append("<br class=remover>");
     }

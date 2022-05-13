@@ -1,7 +1,7 @@
 
 $("#inputEmpresa").hide();
 $(document).on('change', '#isVendedor', function() {   
-    alert()
+    
     if($('#isVendedor').is(":checked"))   
             $("#inputEmpresa").show();
         else
