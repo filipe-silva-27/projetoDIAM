@@ -38,7 +38,7 @@
 				{% for produto,info in produtos  %}
 				<div class="cart-row">
 					<div style="flex:2"><img class="row-image" src="{{produto.pic}}"></div>
-					<div style="flex:2"><p>{{produto.nome}}<!-- {{item.product.name}} --></p></div>
+					<div style="flex:2"><p>{{produto.nome.title}}<!-- {{item.product.name}} --></p></div>
 					<div style="flex:1"><p> {{produto.preco}}€ <!-- ${{item.product.price|floatformat:2}} --></p></div>
 					<div style="flex:1">
 						<p class="quantity">{{info.quantidade}}<!-- {{item.quantity}} --></p>

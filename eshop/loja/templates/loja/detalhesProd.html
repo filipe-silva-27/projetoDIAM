@@ -26,7 +26,7 @@
                             <div class="mb-3"> 
                                 <h5 class="text-uppercase">{{produto.nome}}</h5>
                                 <span class="text-uppercase text-muted brand">by {{produto.seller.who.username}}</span>
-                                <div class="price d-flex flex-row align-items-center fs-2 fw-bold"> {{produto.preco}}€
+                                <div class="price d-flex flex-row align-items-center fs-2 fw-bold"> {{produto.preco | floatformat:2}}€
                                 </div>
                                 
                             </div>
