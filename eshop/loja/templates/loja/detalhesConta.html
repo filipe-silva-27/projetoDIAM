@@ -1,58 +1,35 @@
 {% extends 'loja/main.html' %}
 
 {% block content %}
-{% if request.user.is_authenticated %}
-{% if sucess_message %}
-<p style="color:green">{{sucess_message}}</p>
-{% endif %}
-<!--<center><di onmouseenter="mostra_info()" onmouseleave="mostra_info()" style="width:200px;"> INFORMAÇÕES DA CONTA </di></center>-->
-    <ul id="infoPerfil" class="info_group">
-        <li>Nome:{{user.username}}</li>
-        <li>Email:{{user.email}}</li>
-        {% if isVendedor %}
+    {% if sucess_message %}
+        <p style="color:green">{{sucess_message}}</p>
+    {% endif %}
+    <div class="box-element">
+        <ul id="infoPerfil" class="info_group" style="list-style-type: none;">
+            <li> <strong>Nome: </strong>{{user.username}} </li>
+            <li> <strong>Email: </strong> {{user.email}}</li>
+            {% if isvender %}
 
-            <li>Empresa: {{request.user.vendedor.empresatitle}}</li>
-        {% else %}
+                <li> <strong>Empresa: </strong>{{request.user.vendedor.empresa}}</li>
+            {% else %}
 
-            <label style="width: 6em;" for="isVendedor"><b>Clica aqui para seres Vendedor</b></label>
-            <input class="checkbox" type="checkbox" placeholder="Quero ser Vendedor" name="isVendedor" id="isVendedor"><br>
+                <label for="isVendedor"><b>Clica aqui para seres Vendedor</b></label>
+                <input class="checkbox" type="checkbox" placeholder="Quero ser Vendedor" name="isVendedor" id="isVendedor"><br>
 
 
-            <form id="inputEmpresa" action="{% url 'loja:detailConta' %}" method="post">
-                {% csrf_token %}    
-                <input  class="empresa" type="text" name="empresa" id="empresa" pattern="[a-zA-Z]" required><br>
-                <button type="submit" class="submitEmpresa">Guardar!</button>
-            </form>
-        {%endif%}
-    </ul>
-{% else %}
-    <center><h1>APENAS PARA UTILIZADORES LOGADOS</h1></center>
-{% endif %}
+                <form id="inputEmpresa" action="{% url 'loja:detailConta' %}" method="post">
+                    {% csrf_token %}    
+                    <input  class="empresa" type="text" name="empresa" id="empresa" pattern="[a-zA-Z ]+ " required><br>
+                    <button type="submit" class="submitEmpresa">Guardar!</button>
+                </form>
+            {%endif%}
+        </ul>
+    </div>
+
 {% endblock content %}
 
 {% block js %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
-<script>
-
-$('#inputEmpresa').validate({ // initialize the plugin
-    rules: {
-        empresa: {
-          lettersonly: true,
-          required:true,
-          minlength:5
-      },
-   
-    },
-    submitHandler: function (form) { 
-        alert('valid form submitted'); 
-        return true; 
-    }
-});
-
-jQuery.validator.addMethod("lettersonly", function(value, element) {
-  return this.optional(element) || /^[a-z]+$/i.test(value);
-}, "Letters only please"); 
-
-</script>
+<script src="{ static 'inputEmpresa.js'}"> </script>
 {% endblock js %}
