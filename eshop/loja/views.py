@@ -12,18 +12,17 @@ from django.core.files.storage import FileSystemStorage
 def index(request):
     return  HttpResponse(render(request, 'loja/main.html' ))
 
-@login_required(login_url='loja:login1')
+# @login_required(login_url='loja:login1')
 def loja(request):
     produtos = Produto.objects.all()
-    isVendedor = Vendedor.objects.filter(who=request.user).exists()
-    return render(request, 'loja/loja.html' , {'products_list': produtos,'isvender':isVendedor})
+    return render(request, 'loja/loja.html' , {'products_list': produtos,'isvender': Vendedor.isVendedor(request.user)})
 
    
 
 ##CARINHO 
 @login_required(login_url='loja:login1')
 def cart(request):
-    isVendedor = Vendedor.objects.filter(who=request.user).exists()
+    isVendedor = Vendedor.isVendedor(request.user)
     try:
         carrinho = Cart. objects.get(cliente=request.user)
         pr = ProdutoCarrinho.objects.filter(carrinho=carrinho)
@@ -31,15 +30,15 @@ def cart(request):
         
         return render(request, 'loja/cart.html', {'carrinho':carrinho ,'produtos':produtos,'isvender':isVendedor})
     except Cart.DoesNotExist:
-        return render(request, 'loja/cart.html',{'isvender':isVendedor})
+        return render(request, 'loja/cart.html',{'isvender': isVendedor})
 
 @login_required(login_url='loja:login1')
 def add_cart(request,produto_id):
     especs="";
     produto = get_object_or_404(Produto, pk=produto_id)
     carrinho,created = Cart.objects.get_or_create(cliente=request.user)
-    for questao in Questao.objects.filter(produto_id=produto_id):
-       especs += "Questão: "+str(questao)+"  Opção: "+request.POST[str(questao.id)]+" \n"
+    # for questao in Questao.objects.filter(produto_id=produto_id):
+    #    especs += "Questão: "+str(questao)+"  Opção: "+request.POST[str(questao.id)]+" \n"
     p=ProdutoFinal(produto=produto,opcs=especs)
     p.save()
     #produto_com_especs = ProdutoFinal(produto=produto)
@@ -48,9 +47,7 @@ def add_cart(request,produto_id):
         changes.quantidade = changes.quantidade+1
         changes.save()
         return redirect('loja:cart')
-    add = ProdutoCarrinho( produto=produto,
-    carrinho=carrinho,
-    quantidade=1)
+    add = ProdutoCarrinho( produto=produto, carrinho=carrinho,quantidade=1)
     add.save()
     return redirect('loja:cart')
 
@@ -67,7 +64,7 @@ def remove_one(request,produto_id):
     carrinho = Cart.objects.get(cliente=request.user)
     if carrinho.produtos.filter(id=produto.id).exists():
         changes = ProdutoCarrinho.objects.get(produto=produto,carrinho=carrinho)
-        if changes.quantidade == 1  :
+        if changes.quantidade == 1:
             return redirect('loja:cart')
         changes.quantidade = changes.quantidade-1
         changes.save()
@@ -76,21 +73,20 @@ def remove_one(request,produto_id):
 
 @login_required(login_url='loja:login1')
 def checkout(request):
-    isVendedor = Vendedor.objects.filter(who=request.user).exists()
     carrinho = Cart.objects.get(cliente=request.user)
-    return render(request, 'loja/checkout.html',{'cart':carrinho,'isvender':isVendedor})
+    return render(request, 'loja/checkout.html',{'cart':carrinho,'isvender': Vendedor.isVendedor(request.user)})
 
-@login_required(login_url='loja:login1')
+
 def detalheProd (request, produto_id):
-    isVendedor = Vendedor.objects.filter(who=request.user).exists()
-    produto= get_object_or_404(Produto,id=produto_id)
-    isvender= (produto.seller.who.id==request.user.id) 
+    isVendedor = Vendedor.isVendedor(request.user)
+    produto = get_object_or_404(Produto,id=produto_id)
+    isVendedorProduto= (produto.seller.who.id==request.user.id)
     questoes=Questao.objects.filter(produto_id=produto_id)
     list=[]
     for questao in questoes:
         list.append(Opcao.objects.filter(questao_id=questao.id))
     lista = zip(questoes,list)
-    return render(request, 'loja/detalhesProd.html' , {'produto': produto,'isvender':isvender,'perguntas':lista})
+    return render(request, 'loja/detalhesProd.html' , {'produto': produto,'isvender':isVendedorProduto,'perguntas':lista})
    
 #login/registo/lougout
 def login1(request):
@@ -181,8 +177,8 @@ def detailConta(request):
         new_vender.save()
         return redirect('loja:seller')
     else:
-        isVendedor = Vendedor.objects.filter(who=request.user).exists()
-        return render(request,'loja/detalhesConta.html', {"isvender" : isVendedor})
+       
+        return render(request,'loja/detalhesConta.html', {"isvender" : Vendedor.isVendedor(request.user)})
 
 
 def seller(request):
@@ -191,10 +187,10 @@ def seller(request):
     return render(request,'loja/sellerpage.html', {'products_list': produtos_vendedor})
 
 def search(request):
-    isVendedor = Vendedor.objects.filter(who=request.user).exists()
     pesquisa = request.GET.get('search')
     resultado = Produto.objects.filter(nome__icontains=pesquisa)
-    return render(request, 'loja/loja.html' , {'products_list': resultado, 'isvender' : isVendedor})
+
+    return render(request, 'loja/loja.html' , {'products_list': resultado, 'isvender': Vendedor.isVendedor(request.user)})
 
 def apagar(request, produto_id):
     produto = get_object_or_404(Produto, pk=produto_id)

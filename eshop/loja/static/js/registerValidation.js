@@ -16,8 +16,8 @@ $('#registerForm').validate({ // initialize the plugin
           equalTo: '#psw'
         },
     },
-    submitHandler: function (form) { // for demo
-        alert('valid form submitted'); // for demo
-        return true; // for demo
+    submitHandler: function (form) { 
+        alert('Registado com Sucesso!'); 
+        return true; 
     }
 });

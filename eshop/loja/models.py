@@ -11,6 +11,9 @@ class Vendedor(models.Model):
     who = models.OneToOneField(User, on_delete=models.CASCADE) #generalizacao
     empresa=models.CharField(max_length=25)
 
+    def isVendedor(user):
+        return Vendedor.objects.filter(who=user).exists() if (user.is_authenticated) else False
+
     def __str__(self):
         return self.who.username
 
@@ -48,9 +51,6 @@ class Opcao(models.Model): #é uma opcão de escolha de um produto é como um pr
     def __str__(self):
         return self.texto
 
-
-
-
 ##nao toca no carrinho que ta a dar
 class Cart(models.Model):
     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -76,22 +76,3 @@ class ProdutoCarrinho(models.Model): # <--- through model
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     carrinho = models.ForeignKey(Cart, on_delete=models.CASCADE)
     quantidade = models.IntegerField()
-
-
-
-
-
-
-
-
-
-# class Comentario(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     text = models.CharField(max_length=500)
-#     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
-#     def __str__(self):
-#         return self.user.username + ' disse: ' + self.text
-
-
-
-
