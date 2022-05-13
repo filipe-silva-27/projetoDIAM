@@ -31,27 +31,26 @@
                                 
                             </div>
                             <p class="about">{{produto.descricao}}</p>
-                            <form action="">
+                            <form action="{% url 'loja:add_cart' produto.id %}" method="post"> {% csrf_token %}
                             {% for questao,opcao in perguntas %}
                             <p>{{questao}}</p>
                                 {% for chose in opcao %}
-                                <label class="radio"> <input type="radio" name="{{opcao}}" value="{{chose}}" checked> <span>{{chose}}</span> </label>
-
-                            
-                         
-                                    
+                                <label class="radio"> <input type="radio" name="{{questao.id}}" value="{{chose}}" checked> <span>{{chose}}</span> </label>
                                 {% endfor %}
                             {% endfor %}
+                            <br><br><br>
+                            {% if not isvender %}
+                            <input class="btn btn-danger float-right "type="submit" value="Adicionar ao carrinho">
+                            {% endif %}
+
                         </form>
                             <!-- questoes -->
                             <div class="sizes mt-2">
                                
                             </div>
                             <br>
-                            {% if isVendedor %}
+                            {% if isvender %}
                             <a class="btn btn-danger float-right " href="{% url 'loja:apagar' produto.id %}">Apagar Produto</a>
-                            {% else %}
-                            <a class="btn btn-danger float-right " href="{% url 'loja:add_cart' produto.id %}">Adicionar ao carrinho</a>
                             {% endif %}
                             
                             

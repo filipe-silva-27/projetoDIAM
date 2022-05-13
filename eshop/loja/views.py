@@ -35,8 +35,14 @@ def cart(request):
 
 @login_required(login_url='loja:login1')
 def add_cart(request,produto_id):
+    especs="";
     produto = get_object_or_404(Produto, pk=produto_id)
     carrinho,created = Cart.objects.get_or_create(cliente=request.user)
+    for questao in Questao.objects.filter(produto_id=produto_id):
+       especs += "Questão: "+str(questao)+"  Opção: "+request.POST[str(questao.id)]+" \n"
+    p=ProdutoFinal(produto=produto,opcs=especs)
+    p.save()
+    #produto_com_especs = ProdutoFinal(produto=produto)
     if carrinho.produtos.filter(id=produto.id).exists():
         changes = ProdutoCarrinho.objects.get(produto=produto,carrinho=carrinho)
         changes.quantidade = changes.quantidade+1

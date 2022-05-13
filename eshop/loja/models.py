@@ -28,7 +28,7 @@ class Produto(models.Model):
         return self.nome
 
 class ProdutoFinal(models.Model):
-    produto = models.OneToOneField(Produto, on_delete=models.CASCADE) #generalizacao
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE) #generalizacao
     opcs = models.CharField(max_length=100)
 
 
