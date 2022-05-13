@@ -165,6 +165,9 @@ def criaProduto(request):
 
 def detailConta(request):
     if request.method == 'POST':
+        company = request.POST['empresa']
+        new_vender=Vendedor(who=request.user,empresa=company)
+        new_vender.save()
         return redirect('loja:seller')
     else:
         isVendedor = Vendedor.objects.filter(who=request.user).exists()
