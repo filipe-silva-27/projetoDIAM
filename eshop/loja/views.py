@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.template import loader
 from .models import *
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,permission_required
 from django.core.files.storage import FileSystemStorage
 
 def index(request):
@@ -175,12 +175,13 @@ def detailConta(request):
         company = request.POST['empresa']
         new_vender=Vendedor(who=request.user,empresa=company)
         new_vender.save()
+        user.user_permissions.add('loja.add_produto')
         return redirect('loja:seller')
     else:
        
         return render(request,'loja/detalhesConta.html', {"isvender" : Vendedor.isVendedor(request.user)})
 
-
+@permission_required('loja.add_produto', login_url='loja:loja')
 def seller(request):
     vendedor = get_object_or_404(Vendedor, who=request.user)
     produtos_vendedor = Produto.objects.filter(seller=vendedor)
