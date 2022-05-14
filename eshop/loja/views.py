@@ -34,7 +34,7 @@ def cart(request):
 
 @login_required(login_url='loja:login1')
 def add_cart(request,produto_id):
-    especs="";
+    especs=""
     produto = get_object_or_404(Produto, pk=produto_id)
     carrinho,created = Cart.objects.get_or_create(cliente=request.user)
     # for questao in Questao.objects.filter(produto_id=produto_id):
