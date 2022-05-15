@@ -31,51 +31,46 @@ def cart(request):
     except Cart.DoesNotExist:
         return render(request, 'loja/cart.html',{'isvender': isVendedor})
 
-@login_required(login_url='loja:login1')
-def add_cart(request,produto_id):
-    especs=""
-    
-    carrinho,created = Cart.objects.get_or_create(cliente=request.user)
-    if request.method == 'POST':
-        
-        produto = get_object_or_404(Produto, pk=produto_id)                                                                    #para quando se dá submit com o botão "Adicionar ao Carrinho"
-        
-        for questao in Questao.objects.filter(produto_id=produto_id):                               #foi possível passar a Descricao e distinguir variantes de um produto:                                                                         
-            especs += "Questão: "+str(questao)+"  Opção: "+request.POST[str(questao.id)]+" \n" 
-        
-        if ProdutoCarrinho.objects.filter(produto=produto, carrinho=carrinho, opcs=especs).exists():
+@login_required(login_url='loja:login1')                                    #reutilizámos a variável produto_id para, se entrar no if do POST significa que se clicou no adicionar carrinho
+def add_cart(request,produto_id):                                           #logo podemos ainda não ter ProdutoCarrinho e portanto precisamos de usar o id de Produto para criar/encontrar o ProdutoCarrinho
+    especs=""                                                               #MAS SE entrar no else do POST significa que estamos a receber da view cart, onde já existe o ProdutoCarrinho, assim
+    carrinho,created = Cart.objects.get_or_create(cliente=request.user)    #encontrámos uma forma eficiente de enviar como argumento o id do ProdutoCarrinho no qual se clicou (seta para baixo) para ultrapassar a dificuldade de ter um produto sem personalizacao
+    if request.method == 'POST':             #para quando se dá submit com o botão "Adicionar ao Carrinho"                                                                                       
+        produto = get_object_or_404(Produto, pk=produto_id)            
+        for questao in Questao.objects.filter(produto_id=produto_id):                               #descricao da personalizacao com as questoes e opcoes                                                                         
+            especs += str(questao)+": "+request.POST[str(questao.id)]+" \n" 
+
+        if ProdutoCarrinho.objects.filter(produto=produto, carrinho=carrinho, opcs=especs).exists():  #se mesmo clicando no Adicionar ao Carrinho já houver um item igualzinho
             prodCart=ProdutoCarrinho.objects.get(produto=produto, carrinho=carrinho, opcs=especs)
             prodCart.quantidade = prodCart.quantidade+1
             prodCart.save()
         else:    
             add = ProdutoCarrinho(produto=produto, carrinho=carrinho, quantidade=1, opcs=especs)
             add.save()        
-    else:                                                                      #se já estiver no carrinho, adiciona 1 à quantidade                     #para quando se clica na seta para cima no carrinho e adiciona apenas quantidade
-        prodCart = ProdutoCarrinho.objects.get(pk=produto_id)                                     #como já está no carrinho podemos
-                                                                    #carrinho.produtos.filter(id=produto.id).exists()
-        prodCart.quantidade = prodCart.quantidade+1
+    else:                                                                                         #para quando se clica na seta para cima no carrinho e adiciona apenas quantidade
+        prodCart = ProdutoCarrinho.objects.get(pk=produto_id)                                     
+        prodCart.quantidade = prodCart.quantidade+1                 
         prodCart.save()
-
     return redirect('loja:cart')
 
 @login_required(login_url='loja:login1')
 def remove_cart(request,produto_id, btnDel):
     carrinho = Cart.objects.get(cliente=request.user) 
     produtoCarrinho = ProdutoCarrinho.objects.get(pk=produto_id)
-    if (btnDel == 'false'):                                 #para saber se retiramos o produto do carrinho ou diminuímos quantidade
-        if carrinho.produtos.filter(id=produtoCarrinho.produto.id).exists(): #para reduzir a quantidade
+    if (btnDel == 'false'):                                                     #para saber se retiramos o produto do carrinho ou diminuímos quantidade
+        if carrinho.produtos.filter(id=produtoCarrinho.produto.id).exists():    #para reduzir a quantidade
             changes = ProdutoCarrinho.objects.get(pk=produto_id)
-            if changes.quantidade == 1:             #se a quantidade for só 1 e tentar diminuir a quantidade, remove do carrinho
+            if changes.quantidade == 1:                                         #se a quantidade for só 1 e tentar diminuir a quantidade, remove do carrinho
                 produtoCarrinho.delete()
                 return redirect('loja:cart')
-            changes.quantidade = changes.quantidade-1   #diminui a quantidade quando se clica na seta para baixo da quantidade (no carrinho)
+            changes.quantidade = changes.quantidade-1                           #diminui a quantidade quando se clica na seta para baixo da quantidade (no carrinho)
             changes.save()
             return redirect('loja:cart')
     else:
-        produtoCarrinho.delete()       #remove quando se clica em Remover no carrinho
+        produtoCarrinho.delete()                                    #remove quando se clica em Remover no carrinho
         return redirect('loja:cart')
 
-        
+
 """ @login_required(login_url='loja:login1')
 def remove_one(request,produto_id):
     produto = get_object_or_404(Produto, pk=produto_id)
