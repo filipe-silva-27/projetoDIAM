@@ -30,9 +30,9 @@ class Produto(models.Model):
     def __str__(self):
         return self.nome
 
-class ProdutoFinal(models.Model):
+""" class ProdutoFinal(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE) #generalizacao
-    opcs = models.CharField(max_length=100)
+    opcs = models.CharField(max_length=100) """
 
 
 class Questao(models.Model):
@@ -76,3 +76,4 @@ class ProdutoCarrinho(models.Model): # <--- through model
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     carrinho = models.ForeignKey(Cart, on_delete=models.CASCADE)
     quantidade = models.IntegerField()
+    opcs = models.CharField(max_length=100, default='Não existe Personalização para este produto')

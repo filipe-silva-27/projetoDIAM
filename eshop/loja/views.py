@@ -12,20 +12,19 @@ from django.core.files.storage import FileSystemStorage
 def index(request):
     return  HttpResponse(render(request, 'loja/main.html' ))
 
-# @login_required(login_url='loja:login1')
 def loja(request):
     produtos = Produto.objects.all()
     return render(request, 'loja/loja.html' , {'products_list': produtos,'isvender': Vendedor.isVendedor(request.user)})
-
-   
+    #várias vezes enviamos isVendedor para templates que parece que não o usam, mas a razão foi: quando um template dá extend à navbar, os argumentos não são enviados para esta.                                                                        
+    #Precisámos de enviar isvender para mostrar no dropdown o "Espaço Vendedor" só quando utilizador não está nágina Espaço Vendedor e SE utilizador for mesmo Vendedor
 
 ##CARINHO 
 @login_required(login_url='loja:login1')
 def cart(request):
     isVendedor = Vendedor.isVendedor(request.user)
     try:
-        carrinho = Cart. objects.get(cliente=request.user)
-        pr = ProdutoCarrinho.objects.filter(carrinho=carrinho)
+        carrinho = Cart.objects.get(cliente=request.user)              
+        pr = ProdutoCarrinho.objects.filter(carrinho=carrinho)          
         produtos = zip(carrinho.produtos.all(), pr)
         
         return render(request, 'loja/cart.html', {'carrinho':carrinho ,'produtos':produtos,'isvender':isVendedor})
@@ -35,55 +34,74 @@ def cart(request):
 @login_required(login_url='loja:login1')
 def add_cart(request,produto_id):
     especs=""
-    produto = get_object_or_404(Produto, pk=produto_id)
+    
     carrinho,created = Cart.objects.get_or_create(cliente=request.user)
-    # for questao in Questao.objects.filter(produto_id=produto_id):
-    #    especs += "Questão: "+str(questao)+"  Opção: "+request.POST[str(questao.id)]+" \n"
-    p=ProdutoFinal(produto=produto,opcs=especs)
-    p.save()
-    #produto_com_especs = ProdutoFinal(produto=produto)
-    if carrinho.produtos.filter(id=produto.id).exists():
-        changes = ProdutoCarrinho.objects.get(produto=produto,carrinho=carrinho)
-        changes.quantidade = changes.quantidade+1
-        changes.save()
-        return redirect('loja:cart')
-    add = ProdutoCarrinho( produto=produto, carrinho=carrinho,quantidade=1)
-    add.save()
+    if request.method == 'POST':
+        
+        produto = get_object_or_404(Produto, pk=produto_id)                                                                    #para quando se dá submit com o botão "Adicionar ao Carrinho"
+        
+        for questao in Questao.objects.filter(produto_id=produto_id):                               #foi possível passar a Descricao e distinguir variantes de um produto:                                                                         
+            especs += "Questão: "+str(questao)+"  Opção: "+request.POST[str(questao.id)]+" \n" 
+        
+        if ProdutoCarrinho.objects.filter(produto=produto, carrinho=carrinho, opcs=especs).exists():
+            prodCart=ProdutoCarrinho.objects.get(produto=produto, carrinho=carrinho, opcs=especs)
+            prodCart.quantidade = prodCart.quantidade+1
+            prodCart.save()
+        else:    
+            add = ProdutoCarrinho(produto=produto, carrinho=carrinho, quantidade=1, opcs=especs)
+            add.save()        
+    else:                                                                      #se já estiver no carrinho, adiciona 1 à quantidade                     #para quando se clica na seta para cima no carrinho e adiciona apenas quantidade
+        prodCart = ProdutoCarrinho.objects.get(pk=produto_id)                                     #como já está no carrinho podemos
+                                                                    #carrinho.produtos.filter(id=produto.id).exists()
+        prodCart.quantidade = prodCart.quantidade+1
+        prodCart.save()
+
     return redirect('loja:cart')
 
 @login_required(login_url='loja:login1')
-def remove_cart(request,produto_id):
-    produto = get_object_or_404(Produto, pk=produto_id)
+def remove_cart(request,produto_id, btnDel):
     carrinho = Cart.objects.get(cliente=request.user) 
-    carrinho.produtos.remove(produto)
-    return redirect('loja:cart')
+    produtoCarrinho = ProdutoCarrinho.objects.get(pk=produto_id)
+    if (btnDel == 'false'):                                 #para saber se retiramos o produto do carrinho ou diminuímos quantidade
+        if carrinho.produtos.filter(id=produtoCarrinho.produto.id).exists(): #para reduzir a quantidade
+            changes = ProdutoCarrinho.objects.get(pk=produto_id)
+            if changes.quantidade == 1:             #se a quantidade for só 1 e tentar diminuir a quantidade, remove do carrinho
+                produtoCarrinho.delete()
+                return redirect('loja:cart')
+            changes.quantidade = changes.quantidade-1   #diminui a quantidade quando se clica na seta para baixo da quantidade (no carrinho)
+            changes.save()
+            return redirect('loja:cart')
+    else:
+        produtoCarrinho.delete()       #remove quando se clica em Remover no carrinho
+        return redirect('loja:cart')
 
-@login_required(login_url='loja:login1')
+        
+""" @login_required(login_url='loja:login1')
 def remove_one(request,produto_id):
     produto = get_object_or_404(Produto, pk=produto_id)
     carrinho = Cart.objects.get(cliente=request.user)
-    if carrinho.produtos.filter(id=produto.id).exists():
+    if carrinho.produtos.filter(id=produto.id).exists(): #para reduzir a quantidade
         changes = ProdutoCarrinho.objects.get(produto=produto,carrinho=carrinho)
         if changes.quantidade == 1:
             return redirect('loja:cart')
         changes.quantidade = changes.quantidade-1
         changes.save()
-        return redirect('loja:cart')
+        return redirect('loja:cart') """
 ##FIM CARRINHO
 
 @login_required(login_url='loja:login1')
-def checkout(request):
-    carrinho = Cart.objects.get(cliente=request.user)
+def checkout(request):                                              #carrega a página do checkout
+    carrinho = Cart.objects.get(cliente=request.user)        
     return render(request, 'loja/checkout.html',{'cart':carrinho,'isvender': Vendedor.isVendedor(request.user)})
 
 
-def detalheProd (request, produto_id):
-    isVendedor = Vendedor.isVendedor(request.user)
-    produto = get_object_or_404(Produto,id=produto_id)
-    isVendedorProduto= (produto.seller.who.id==request.user.id)
+def detalheProd (request, produto_id):                              #pagina do detalhe do produto
+    isVendedor = Vendedor.isVendedor(request.user)                  #é vendedor
+    produto = get_object_or_404(Produto,id=produto_id)              #mas será vendedor DESTE produto?
+    isVendedorProduto= (produto.seller.who.id==request.user.id)     #para saber se mostramos o adicionar ao carrinho ou apagar produto
     questoes=Questao.objects.filter(produto_id=produto_id)
     list=[]
-    for questao in questoes:
+    for questao in questoes:                                        #passa as questoes 
         list.append(Opcao.objects.filter(questao_id=questao.id))
     lista = zip(questoes,list)
     return render(request, 'loja/detalhesProd.html' , {'produto': produto,'isvender':isVendedorProduto,'perguntas':lista})
@@ -114,7 +132,7 @@ def logout1(request):
         return HttpResponse("Erro no Logout do Utilizador feito ")
 
 def register(request):
-    if request.method=='POST': #falta aqui receber do form
+    if request.method=='POST':
         username= request.POST['username']
         email=request.POST['email']
         password= request.POST['psw']
@@ -170,6 +188,7 @@ def criaProduto(request):
         questoes=Questao.objects.all()
         return render(request, "loja/criaProduto.html", {"questoes": questoes})
 
+@login_required(login_url='loja:login1')
 def detailConta(request):
     if request.method == 'POST':
         company = request.POST['empresa']
@@ -181,18 +200,18 @@ def detailConta(request):
         return render(request,'loja/detalhesConta.html', {"isvender" : Vendedor.isVendedor(request.user)})
 
 @user_passes_test(Vendedor.isVendedor, login_url='loja:loja')
-def seller(request):
+def seller(request):                                                #carrega Espaço Vendedor
     vendedor = get_object_or_404(Vendedor, who=request.user)
     produtos_vendedor = Produto.objects.filter(seller=vendedor)
     return render(request,'loja/sellerpage.html', {'products_list': produtos_vendedor})
 
-def search(request):
+def search(request):                                                #faz pesquisa na barra de pesquisa
     pesquisa = request.GET.get('search')
     resultado = Produto.objects.filter(nome__icontains=pesquisa)
 
     return render(request, 'loja/loja.html' , {'products_list': resultado, 'isvender': Vendedor.isVendedor(request.user)})
 
-def apagar(request, produto_id):
+def apagar(request, produto_id):                            #quando vendedor já não quer vender aquele produto
     produto = get_object_or_404(Produto, pk=produto_id)
     Produto.delete(produto)
     return redirect('loja:seller')
