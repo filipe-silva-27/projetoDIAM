@@ -29,7 +29,8 @@
     }
 
     function Elimina_Questao(nrQue){
-        jQuery("#questao_" + nrQue).remove();
+        const myNode = document.getElementById("#questao_" + nrQue);
+        myNode.innerHTML = '';
         q--;
     } 
     
