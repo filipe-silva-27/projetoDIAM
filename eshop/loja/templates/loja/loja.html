@@ -20,7 +20,7 @@
 </center>
 
 <div class="card-group ms-5 me-auto" >
-    {% for product in products_list %}
+    {% for product in page %}
 
     <div class="card m-1 mb-3" style="min-width: 17rem; max-width: 17rem;">
         <img class="card-img-top" width="240px" height="180px" style="object-fit:contain;" src="{{product.pic}}">
@@ -33,7 +33,18 @@
         
     </div>
     {% endfor %}
+    
 </div>
+<span class="current">
+  Page {{ page.number }} of {{ page.paginator.num_pages }}.
+</span>
+{% if page.has_next %}
+<a href="{%url 'loja:loja' %}?page={{ page.next_page_number }}">next</a>
+{% endif %}
+{% if page.has_previous %}
+<a href="{%url 'loja:loja' %}?page={{ page.previous_page_number }}">last ;</a>
+{% endif %}
+
 
 {% endblock content %}
 {% block js %}

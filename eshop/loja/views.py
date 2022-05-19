@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.template import loader
+from django.core.paginator import Paginator
 from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required,permission_required, user_passes_test
@@ -14,7 +15,10 @@ def index(request):
 
 def loja(request):
     produtos = Produto.objects.all()
-    return render(request, 'loja/loja.html' , {'products_list': produtos,'isvender': Vendedor.isVendedor(request.user)})
+    p = Paginator(produtos, 5)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    return render(request, 'loja/loja.html' , {'page':page_obj,'products_list': produtos,'isvender': Vendedor.isVendedor(request.user)})
     #várias vezes enviamos isVendedor para templates que parece que não o usam, mas a razão foi: quando um template dá extend à navbar, os argumentos não são enviados para esta.                                                                        
     #Precisámos de enviar isvender para mostrar no dropdown o "Espaço Vendedor" só quando utilizador não está nágina Espaço Vendedor e SE utilizador for mesmo Vendedor
 
